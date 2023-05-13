@@ -1,7 +1,7 @@
 
 # Another Sonic Adventure
 
-This is a fangame, currently build as a Sonic 2 (2013) mod.
+This is a fangame, currently built as a Sonic 2 (2013) mod.
 This is still in development and is not very advanced.
 
 
