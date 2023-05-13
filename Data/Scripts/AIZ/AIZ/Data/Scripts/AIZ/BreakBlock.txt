@@ -1,0 +1,251 @@
+// ========================
+// Aliases
+// ========================
+
+private alias 0 : BREAKBLOCK_SOLID
+private alias 1 : BREAKBLOCK_DEBRIS1
+private alias 2 : BREAKBLOCK_DEBRIS2
+private alias 3 : BREAKBLOCK_DEBRIS3
+private alias 4 : BREAKBLOCK_DEBRIS4
+private alias 5 : BREAKBLOCK_DEBRIS5
+private alias 6 : BREAKBLOCK_DEBRIS6
+private alias 7 : BREAKBLOCK_DEBRIS7
+private alias 8 : BREAKBLOCK_DEBRIS8
+private alias 9 : BREAKBLOCK_DEBRIS9
+private alias 10 : BREAKBLOCK_DEBRIS10
+private alias 11 : BREAKBLOCK_DEBRIS11
+private alias 12 : BREAKBLOCK_DEBRIS12
+
+// Player Aliases
+private alias object.yvel : player.yvel
+private alias object.gravity : player.gravity
+private alias object.animation : player.animation
+private alias object.value16 : player.isSidekick
+private alias object.value19 : player.badnikBonus
+
+// Global Variable ID Aliases
+private alias 22 : GLOBAL_PLAYERSCORE
+
+
+// ========================
+// Function Declarations
+// ========================
+
+
+
+
+// ========================
+// Function Definitions
+// ========================
+
+
+
+
+// ========================
+// Events
+// ========================
+
+event ObjectUpdate
+	switch object.state
+	case BREAKBLOCK_SOLID
+		foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+			if player[currentPlayer].animation == ANI_JUMPING
+				BoxCollisionTest(C_SOLID, object.entityPos, -16, -16, 16, 16, currentPlayer, C_BOX, C_BOX, C_BOX, C_BOX)
+				if checkResult == COL_TOP
+					player[currentPlayer].yvel = -0x30000
+					player[currentPlayer].gravity = GRAVITY_AIR
+
+					// Create block fragments
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos -= 8
+					object[tempObjectPos].iypos -= 24
+					object[tempObjectPos].xvel = -0x10000
+					object[tempObjectPos].yvel = -0x20000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS1
+					object[tempObjectPos].drawOrder = 5
+
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos += 8
+					object[tempObjectPos].iypos -= 24
+					object[tempObjectPos].xvel = 0x10000
+					object[tempObjectPos].yvel = -0x20000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS2
+					object[tempObjectPos].drawOrder = 5
+
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos -= 8
+					object[tempObjectPos].iypos -= 8
+					object[tempObjectPos].xvel = -0x0F000
+					object[tempObjectPos].yvel = -0x1F000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS3
+					object[tempObjectPos].drawOrder = 5
+
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos += 8
+					object[tempObjectPos].iypos -= 8
+					object[tempObjectPos].xvel = 0x0F000
+					object[tempObjectPos].yvel = -0x1F000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS4
+					object[tempObjectPos].drawOrder = 5
+
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos -= 8
+					object[tempObjectPos].iypos += 8
+					object[tempObjectPos].xvel = -0x0E000
+					object[tempObjectPos].yvel = -0x1E000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS5
+					object[tempObjectPos].drawOrder = 5
+
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos += 8
+					object[tempObjectPos].iypos += 8
+					object[tempObjectPos].xvel = 0x0E000
+					object[tempObjectPos].yvel = -0x1E000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS6
+					object[tempObjectPos].drawOrder = 5
+
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos -= 8
+					object[tempObjectPos].iypos += 24
+					object[tempObjectPos].xvel = -0x0D000
+					object[tempObjectPos].yvel = -0x1D000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS7
+					object[tempObjectPos].drawOrder = 5
+
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos += 8
+					object[tempObjectPos].iypos += 24
+					object[tempObjectPos].xvel = 0x0D000
+					object[tempObjectPos].yvel = -0x1D000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS8
+					object[tempObjectPos].drawOrder = 5
+
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos -= 8
+					object[tempObjectPos].iypos += 32
+					object[tempObjectPos].xvel = -0x0C000
+					object[tempObjectPos].yvel = -0x1C000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS9
+					object[tempObjectPos].drawOrder = 5
+
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos += 8
+					object[tempObjectPos].iypos += 32
+					object[tempObjectPos].xvel = 0x0C000
+					object[tempObjectPos].yvel = -0x1C000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS10
+					object[tempObjectPos].drawOrder = 5
+					
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos -= 8
+					object[tempObjectPos].iypos += 48
+					object[tempObjectPos].xvel = -0x0B000
+					object[tempObjectPos].yvel = -0x1B000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS11
+					object[tempObjectPos].drawOrder = 5
+
+					CreateTempObject(TypeName[Break Block], 0, object.xpos, object.ypos)
+					object[tempObjectPos].ixpos += 8
+					object[tempObjectPos].iypos += 48
+					object[tempObjectPos].xvel = 0x0B000
+					object[tempObjectPos].yvel = -0x1B000
+					object[tempObjectPos].state = BREAKBLOCK_DEBRIS12
+					object[tempObjectPos].drawOrder = 5
+					object.type = TypeName[Blank Object]
+
+					if player[currentPlayer].gravity == 1
+						if player[currentPlayer].badnikBonus < 15
+							player[currentPlayer].badnikBonus++
+						end if
+					end if
+
+					PlaySfx(SfxName[Block Break], false)
+				end if
+			else
+			BoxCollisionTest(C_SOLID, object.entityPos, -16, -16, 16, 16, currentPlayer, C_BOX, C_BOX, C_BOX, C_BOX)
+			end if
+		next
+		break
+		
+	case BREAKBLOCK_DEBRIS1
+	case BREAKBLOCK_DEBRIS2
+	case BREAKBLOCK_DEBRIS3
+	case BREAKBLOCK_DEBRIS4
+	case BREAKBLOCK_DEBRIS5
+	case BREAKBLOCK_DEBRIS6
+	case BREAKBLOCK_DEBRIS7
+	case BREAKBLOCK_DEBRIS8
+	case BREAKBLOCK_DEBRIS9
+	case BREAKBLOCK_DEBRIS10
+	case BREAKBLOCK_DEBRIS11
+	case BREAKBLOCK_DEBRIS12
+		// Block fragment - just update movement and unload when no longer needed
+		object.xpos += object.xvel
+		object.ypos += object.yvel
+		object.yvel += 0x3800
+		if object.outOfBounds == true
+			object.type = TypeName[Blank Object]
+		end if
+		break
+
+	end switch
+end event
+
+
+event ObjectDraw
+	DrawSprite(object.state)
+end event
+
+
+event ObjectStartup
+	if stage.actnum == 1
+		LoadSpriteSheet("AIZ/Objects2.gif")
+		// Main Block Frame
+		SpriteFrame(-16, -28, 32, 96, 1, 112)
+	else 
+		LoadSpriteSheet("AIZ/Objects3.gif")
+		// Main Block Frame
+		SpriteFrame(-16, -24, 32, 96, 1, 112)
+	end if
+	
+	
+	// Grass Frames
+	SpriteFrame(-8, -8, 16, 16, 1, 112)
+	SpriteFrame(-8, -8, 16, 16, 17, 112)
+	
+	// Dirt/Grass Frames
+	SpriteFrame(-8, -8, 16, 16, 1, 128)
+	SpriteFrame(-8, -8, 16, 16, 17, 128)
+
+	// Dirt Frames
+	SpriteFrame(-8, -8, 16, 16, 1, 144)
+	SpriteFrame(-8, -8, 16, 16, 17, 144)
+	SpriteFrame(-8, -8, 16, 16, 1, 144)
+	SpriteFrame(-8, -8, 16, 16, 17, 144)
+
+	// Dirt frames 2
+	SpriteFrame(-8, -8, 16, 16, 1, 176)
+	SpriteFrame(-8, -8, 16, 16, 17, 176)
+
+	// Bottom frames 2
+	SpriteFrame(-8, -8, 16, 16, 1, 192)
+	SpriteFrame(-8, -8, 16, 16, 17, 192)
+
+end event
+
+
+// ========================
+// Editor Events
+// ========================
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+
+event RSDKLoad
+	LoadSpriteSheet("AIZ/Objects2.gif")
+	SpriteFrame(-16, -28, 32, 96, 1, 112)
+	
+	SetVariableAlias(ALIAS_VAR_PROPVAL, "unused")
+end event

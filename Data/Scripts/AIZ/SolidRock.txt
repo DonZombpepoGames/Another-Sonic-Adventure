@@ -1,0 +1,67 @@
+// ========================
+// Aliases
+// ========================
+
+private alias 0 : SOLIDROCK_LARGE
+private alias 1 : SOLIDROCK_MEDIUM
+private alias 2 : SOLIDROCK_SMALL
+
+
+event ObjectUpdate
+	switch object.propertyvalue
+	case SOLIDROCK_LARGE
+		foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+			BoxCollisionTest(C_SOLID, object.entityPos, -23, -39, 24, 40, currentPlayer, C_BOX, C_BOX, C_BOX, C_BOX)
+		next
+		break
+		
+	case SOLIDROCK_MEDIUM
+		foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+			BoxCollisionTest(C_SOLID, object.entityPos, -23, -22, 23, 24, currentPlayer, C_BOX, C_BOX, C_BOX, C_BOX)
+		next
+		break
+	case SOLIDROCK_SMALL
+		foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+			BoxCollisionTest(C_SOLID, object.entityPos, -23, -14, 23, 16, currentPlayer, C_BOX, C_BOX, C_BOX, C_BOX)
+		next
+		break
+	end switch
+end event
+
+
+event ObjectDraw
+	DrawSprite(object.propertyvalue)
+end event
+
+
+event ObjectStartup
+	//Load sprite sheet based on act number
+	if stage.actnum == 1
+		LoadSpriteSheet("AIZ/Objects2.gif")
+	else 
+		LoadSpriteSheet("AIZ/Objects3.gif")
+	end if
+
+	// 0 - Large Rock
+	SpriteFrame(-24, -39, 48, 79, 463, 113)
+	SpriteFrame(-23, -23, 46, 47, 465, 65)
+	SpriteFrame(-23, -15, 46, 31, 465, 33)
+
+end event
+
+
+// ========================
+// Editor Events
+// ========================
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+
+event RSDKLoad
+	LoadSpriteSheet("AIZ/Objects2.gif")
+	SpriteFrame(-16, -28, 32, 96, 1, 112)
+	
+	SetVariableAlias(ALIAS_VAR_PROPVAL, "unused")
+end event

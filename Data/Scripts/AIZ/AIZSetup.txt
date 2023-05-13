@@ -1,0 +1,850 @@
+
+// Aliases
+private alias 40 : TYPE_AIZSETUP
+private alias object.value0	 : object.PaletteTimer
+private alias object.value1	 : object.FGDeformationTimer
+private alias object.value2	 : object.BGDeformationTimer
+private alias object.value3  : object.FireTimer
+private alias object.value4  : object.FireIndex
+private alias object.value7  : object.FlowersTimer
+private alias object.value8  : object.FlowersIndex
+private alias object.value9  : object.Vine1Timer
+private alias object.value10 : object.Vine1Index
+private alias object.value11 : object.Vine2Timer
+private alias object.value12 : object.Vine2Index
+private alias object.value13 : object.Vine3Timer
+private alias object.value14 : object.Vine3Index
+private alias object.value15 : object.Vine4Timer
+private alias object.value16 : object.Vine4Index
+
+
+
+// Tracks
+private alias 0 : TRACK_STAGE
+private alias 1 : TRACK_ACTFINISH
+private alias 2 : TRACK_INVINCIBLE
+private alias 3 : TRACK_CONTINUE
+private alias 4 : TRACK_BOSS
+private alias 5 : TRACK_GAMEOVER
+private alias 6 : TRACK_DROWNING
+private alias 7 : TRACK_SUPER
+
+
+// Music Events
+private alias  0 : MUSICEVENT_FADETOBOSS
+private alias  1 : MUSICEVENT_FADETOSTAGE
+private alias  2 : MUSICEVENT_TRANSITION
+
+private alias 0 : MUSICEVENT_FLAG_NOCHANGE
+private alias 1 : MUSICEVENT_FLAG_SPEEDUP
+private alias 2 : MUSICEVENT_FLAG_SLOWDOWN
+
+// Music Loops
+private alias 43190  : MUSIC_LOOP_AIZ_1
+private alias 34552  : MUSIC_LOOP_AIZ_1_F
+
+private alias 21111  : MUSIC_LOOP_AIZ_2
+private alias 16889  : MUSIC_LOOP_AIZ_2_F
+
+private alias 38679  : MUSIC_LOOP_INV
+private alias 30897  : MUSIC_LOOP_INV_F
+
+
+
+// Function declarations
+reserve function AIZSetup_SpeedUpMusic1P
+reserve function AIZSetup_SlowDownMusic1P
+reserve function AIZSetup_SpeedUpMusic2P
+reserve function AIZSetup_SlowDownMusic2P
+reserve function AIZSetup_InitSuperSonicPal
+reserve function AIZSetup_Function95
+reserve function AIZSetup_Function96
+
+// Static Values
+public value Water_flashTimer = 0;
+
+//Tables
+private table AIZSetup_Fire1FrameTable1
+	919, 929, 939, 949
+end table
+private table AIZSetup_Fire1FrameTable2
+	910, 920, 930, 940
+end table
+private table AIZSetup_Fire1FrameTable3
+	911, 921, 931, 941
+end table
+private table AIZSetup_Fire1FrameTable4
+	912, 922, 932, 942
+end table
+private table AIZSetup_Fire1FrameTable5
+	913, 923, 933, 943
+end table
+private table AIZSetup_Fire1FrameTable6
+	914, 924, 934, 944
+end table
+private table AIZSetup_Fire1FrameTable7
+	915, 925, 935, 945
+end table
+private table AIZSetup_Fire1FrameTable8
+	916, 926, 936, 946
+end table
+private table AIZSetup_Fire1FrameTable9
+	917, 927, 937, 947
+end table
+private table AIZSetup_Fire1FrameTable10
+	918, 928, 938, 948
+end table
+
+//ground fire
+private table AIZSetup_Fire2FrameTable1
+	950, 957, 964, 971
+end table
+
+private table AIZSetup_Fire2FrameTable2
+	951, 958, 965, 972
+end table
+
+private table AIZSetup_Fire2FrameTable3
+	952, 959, 966, 973
+end table
+
+private table AIZSetup_Fire2FrameTable4
+	953, 960, 967, 974
+end table
+
+private table AIZSetup_Fire2FrameTable5
+	954, 961, 968, 975
+end table
+
+private table AIZSetup_Fire2FrameTable6
+	955, 962, 969, 976
+end table
+
+private table AIZSetup_Fire2FrameTable7
+	956, 963, 970, 977
+end table
+
+private table AIZSetup_Fire2FrameTable8
+	957, 964, 971, 978
+end table
+
+//flowers
+
+private table AIZSetup_FlowersFrameTable1
+	766, 768, 770, 772, 774, 774, 772, 770, 768, 766
+end table
+
+private table AIZSetup_FlowersFrameTable2
+	767, 769, 771, 773, 775, 775, 773, 771, 769, 767
+end table
+
+//Vine 1
+private table AIZSetup_Vine1FrameTable1
+	748, 751, 754, 757, 754, 757, 760, 763, 757, 757, 751
+end table
+private table AIZSetup_Vine1FrameTable2
+	749, 752, 755, 758, 755, 758, 761, 764, 758, 758, 752
+end table
+private table AIZSetup_Vine1FrameTable3
+	750, 753, 756, 759, 756, 759, 762, 765, 759, 759, 753
+end table
+
+//Vine 2
+private table AIZSetup_Vine2FrameTable1
+	748, 751, 754, 757, 760, 763, 760, 757, 754
+end table
+private table AIZSetup_Vine2FrameTable2
+	749, 752, 755, 758, 761, 764, 761, 758, 755
+end table
+private table AIZSetup_Vine2FrameTable3
+	750, 753, 756, 759, 762, 765, 762, 759, 756
+end table
+
+//Vine 3
+private table AIZSetup_Vine3FrameTable1
+	978, 981, 984, 987, 984, 987, 990, 993, 987, 987, 981
+end table
+private table AIZSetup_Vine3FrameTable2
+	979, 982, 985, 988, 985, 988, 991, 994, 988, 988, 982
+end table
+private table AIZSetup_Vine3FrameTable3
+	980, 983, 986, 989, 986, 989, 992, 995, 989, 989, 983
+end table
+
+//Vine 4
+private table AIZSetup_Vine4FrameTable1
+	978, 981, 984, 987, 990, 993, 990, 987, 984
+end table
+private table AIZSetup_Vine4FrameTable2
+	979, 982, 985, 988, 991, 994, 991, 988, 985
+end table
+private table AIZSetup_Vine4FrameTable3
+	980, 983, 986, 989, 992, 995, 992, 989, 986
+end table
+
+//foreground deformation
+public table AIZSetup_deformTableFG
+    -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, -1, -1
+    0, 0, 0, 0, -1, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1
+    0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+end table
+
+//This is not here to use, but it looks fun
+//public table AIZSetup_deformTableFG
+//    0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 2, 2, 1, 1, 0,
+//   0, 1, 2, 3, 4, 5, 6, 6, 5, 3, 2, 2, 2, 1, 1, 0,
+//    0, 1, 2, 3, 4, 5, 6, 6, 5, 3, 2, 2, 2, 1, 1, 0,
+//    0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 2, 2, 1, 1, 0
+//end table
+
+//background deformation
+public table AIZSetup_deformTableBG
+    -3, -1, -1, -1, -2, 0, -2, -2, -2, 0, -2, 0, -4, -2, 0, -4
+    -4, -1, 0, 0, -3, -4, -4, -1, -4, -4, -3, -4, -1, 0, 0, 0
+    -3, -1, -1, -1, -2, 0, -2, -2, -2, 0, -2, 0, -4, -2, 0, -4
+    -4, -1, 0, 0, -3, -4, -4, -1, -4, -4, -3, -4, -1, 0, 0, 0
+end table
+
+public alias AIZSetup_value33 : AIZSetup_flashTimer
+
+function AIZSetup_Function95
+	stage[arrayPos1].deformationData1 = -1
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = -1
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = -2
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = -2
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = -3
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = -3
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = -3
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = -3
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = -2
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = -2
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = -1
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = -1
+	arrayPos1++
+end function
+
+
+function AIZSetup_Function96
+	stage[arrayPos1].deformationData1 = 1
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = 1
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = 2
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = 2
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = 3
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = 3
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = 3
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = 3
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = 2
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = 2
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = 1
+	arrayPos1++
+	stage[arrayPos1].deformationData1 = 1
+	arrayPos1++
+end function
+
+
+private function AIZSetup_SpeedUpMusic1P
+	CheckEqual(object[SLOT_MUSICEVENT_CHANGE].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[SLOT_MUSICEVENT_CHANGE].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, MUSICEVENT_FLAG_NOCHANGE)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case TRACK_STAGE
+			SetMusicTrack("Invincibility_F.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV_F)
+			SwapMusicTrack("01_fast.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_1_F, 8000)
+			break
+
+		case TRACK_INVINCIBLE
+			SetMusicTrack("01_fast.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_1_F)
+			SwapMusicTrack("Invincibility_F.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV_F, 8000)
+			break
+
+		case TRACK_BOSS
+		case TRACK_DROWNING
+		case TRACK_SUPER
+			SetMusicTrack("01_fast.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_1_F)
+			SetMusicTrack("Invincibility_F.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV_F)
+			break
+			
+		end switch
+	else
+		stage.musicFlag = MUSICEVENT_FLAG_SPEEDUP
+	end if
+end function
+
+
+private function AIZSetup_SlowDownMusic1P
+	CheckEqual(object[SLOT_MUSICEVENT_CHANGE].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[SLOT_MUSICEVENT_CHANGE].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, MUSICEVENT_FLAG_NOCHANGE)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case TRACK_STAGE
+			SetMusicTrack("Invincibility.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV)
+			SwapMusicTrack("01.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_1, 12500)
+			break
+
+		case TRACK_INVINCIBLE
+			SetMusicTrack("01.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_1)
+			SwapMusicTrack("Invincibility.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV, 12500)
+			break
+
+		case TRACK_BOSS
+		case TRACK_DROWNING
+		case TRACK_SUPER
+			SetMusicTrack("01.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_1)
+			SetMusicTrack("Invincibility.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV)
+			break
+			
+		end switch
+	else
+		stage.musicFlag = MUSICEVENT_FLAG_SLOWDOWN
+	end if
+end function
+
+
+private function AIZSetup_SpeedUpMusic2P
+	CheckEqual(object[SLOT_MUSICEVENT_CHANGE].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[SLOT_MUSICEVENT_CHANGE].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, MUSICEVENT_FLAG_NOCHANGE)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case TRACK_STAGE
+			SetMusicTrack("Invincibility_F.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV_F)
+			SwapMusicTrack("02_fast.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_2_F, 8000)
+			break
+
+		case TRACK_INVINCIBLE
+			SetMusicTrack("02_fast.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_2_F)
+			SwapMusicTrack("Invincibility_F.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV_F, 8000)
+			break
+
+		case TRACK_BOSS
+		case TRACK_DROWNING
+		case TRACK_SUPER
+			SetMusicTrack("02_fast.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_2_F)
+			SetMusicTrack("Invincibility_F.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV_F)
+			break
+			
+		end switch
+	else
+		stage.musicFlag = MUSICEVENT_FLAG_SPEEDUP
+	end if
+end function
+
+
+private function AIZSetup_SlowDownMusic2P
+	CheckEqual(object[SLOT_MUSICEVENT_CHANGE].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[SLOT_MUSICEVENT_CHANGE].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, MUSICEVENT_FLAG_NOCHANGE)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case TRACK_STAGE
+			SetMusicTrack("Invincibility.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV)
+			SwapMusicTrack("02.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_2, 12500)
+			break
+
+		case TRACK_INVINCIBLE
+			SetMusicTrack("02.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_2)
+			SwapMusicTrack("Invincibility.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV, 12500)
+			break
+
+		case TRACK_BOSS
+		case TRACK_DROWNING
+		case TRACK_SUPER
+			SetMusicTrack("02.ogg", TRACK_STAGE, MUSIC_LOOP_AIZ_2)
+			SetMusicTrack("Invincibility.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV)
+			break
+			
+		end switch
+	else
+		stage.musicFlag = MUSICEVENT_FLAG_SLOWDOWN
+	end if
+end function
+
+
+event ObjectUpdate
+if Stage.actNum == 1
+	if stage.playerListPos == 2
+        Stage.ActiveLayer[0] = 2
+    else
+        Stage.ActiveLayer[0] = 1
+    end if
+	
+	// Flowers
+	if object.FlowersTimer < 1
+			GetTableValue(temp0, object.FlowersIndex, AIZSetup_FlowersFrameTable1)
+			Copy16x16Tile(707, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlowersIndex, AIZSetup_FlowersFrameTable2)
+			Copy16x16Tile(708, temp0)
+			temp0 += 5
+
+			object.FlowersIndex++
+
+			object.FlowersIndex %= 10
+			object.FlowersTimer = 4
+		else
+			object.FlowersTimer--
+	end if
+end if
+if stage.actnum == 1
+	if object.Vine1Timer < 1
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1FrameTable1)
+			Copy16x16Tile(701, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1FrameTable2)
+			Copy16x16Tile(702, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1FrameTable3)
+			Copy16x16Tile(703, temp0)
+			temp0 += 5
+
+			object.Vine1Index++
+
+			object.Vine1Index %= 11
+			switch object.Vine1Index
+				case 8
+					object.Vine1Timer = 36
+				break
+				case 9
+					object.Vine1Timer = 2
+				break
+				case 10
+					object.Vine1Timer = 2
+				break
+				case 11
+					object.Vine1Timer = 2
+				break
+				default
+					object.Vine1Timer = 6
+				break
+			end switch
+		else
+			object.Vine1Timer--
+	end if
+
+	if object.Vine2Timer < 1
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2FrameTable1)
+			Copy16x16Tile(704, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2FrameTable2)
+			Copy16x16Tile(705, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2FrameTable3)
+			Copy16x16Tile(706, temp0)
+			temp0 += 5
+
+			object.Vine2Index++
+
+			object.Vine2Index %= 9
+			switch object.Vine2Index
+				case 6
+					object.Vine2Timer = 40
+				break
+				default
+					object.Vine2Timer = 6
+				break
+			end switch
+		else
+			object.Vine2Timer--
+	end if
+end if
+if stage.actnum == 0
+	if object.Vine1Timer < 1
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1FrameTable1)
+			Copy16x16Tile(701, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1FrameTable2)
+			Copy16x16Tile(702, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1FrameTable3)
+			Copy16x16Tile(703, temp0)
+			temp0 += 5
+
+			object.Vine1Index++
+
+			object.Vine1Index %= 11
+			switch object.Vine1Index
+				case 8
+					object.Vine1Timer = 36
+				break
+				case 9
+					object.Vine1Timer = 2
+				break
+				case 10
+					object.Vine1Timer = 2
+				break
+				case 11
+					object.Vine1Timer = 2
+				break
+				default
+					object.Vine1Timer = 6
+				break
+			end switch
+		else
+			object.Vine1Timer--
+	end if
+
+	if object.Vine2Timer < 1
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2FrameTable1)
+			Copy16x16Tile(704, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2FrameTable2)
+			Copy16x16Tile(705, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2FrameTable3)
+			Copy16x16Tile(706, temp0)
+			temp0 += 5
+
+			object.Vine2Index++
+
+			object.Vine2Index %= 9
+			switch object.Vine2Index
+				case 6
+					object.Vine2Timer = 40
+				break
+				default
+					object.Vine2Timer = 6
+				break
+			end switch
+		else
+			object.Vine2Timer--
+	end if
+end if
+if stage.actnum == 2
+	if object.Vine3Timer < 1
+			GetTableValue(temp0, object.Vine3Index, AIZSetup_Vine3FrameTable1)
+			Copy16x16Tile(121, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine3Index, AIZSetup_Vine3FrameTable2)
+			Copy16x16Tile(122, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine3Index, AIZSetup_Vine3FrameTable3)
+			Copy16x16Tile(123, temp0)
+			temp0 += 5
+
+			object.Vine3Index++
+
+			object.Vine3Index %= 11
+			switch object.Vine3Index
+				case 8
+					object.Vine3Timer = 36
+				break
+				case 9
+					object.Vine3Timer = 2
+				break
+				case 10
+					object.Vine3Timer = 2
+				break
+				case 11
+					object.Vine3Timer = 2
+				break
+				default
+					object.Vine3Timer = 6
+				break
+			end switch
+		else
+			object.Vine3Timer--
+	end if
+
+	if object.Vine4Timer < 1
+			GetTableValue(temp0, object.Vine4Index, AIZSetup_Vine4FrameTable1)
+			Copy16x16Tile(124, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine4Index, AIZSetup_Vine4FrameTable2)
+			Copy16x16Tile(125, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine4Index, AIZSetup_Vine4FrameTable3)
+			Copy16x16Tile(126, temp0)
+			temp0 += 5
+
+			object.Vine4Index++
+
+			object.Vine4Index %= 9
+			switch object.Vine2Index
+				case 6
+					object.Vine4Timer = 40
+				break
+				default
+					object.Vine4Timer = 6
+				break
+			end switch
+		else
+			object.Vine4Timer--
+	end if
+end if
+
+if stage.actnum == 2
+	if object.FireTimer < 1
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire1FrameTable1)
+			Copy16x16Tile(136, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire1FrameTable2)
+			Copy16x16Tile(127, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire1FrameTable3)
+			Copy16x16Tile(128, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire1FrameTable4)
+			Copy16x16Tile(129, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire1FrameTable5)
+			Copy16x16Tile(130, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire1FrameTable6)
+			Copy16x16Tile(131, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire1FrameTable7)
+			Copy16x16Tile(132, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire1FrameTable8)
+			Copy16x16Tile(133, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire1FrameTable9)
+			Copy16x16Tile(134, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire1FrameTable10)
+			Copy16x16Tile(135, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire2FrameTable1)
+			Copy16x16Tile(114, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire2FrameTable2)
+			Copy16x16Tile(115, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire2FrameTable3)
+			Copy16x16Tile(116, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire2FrameTable4)
+			Copy16x16Tile(117, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire2FrameTable5)
+			Copy16x16Tile(118, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire2FrameTable6)
+			Copy16x16Tile(119, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FireIndex, AIZSetup_Fire2FrameTable7)
+			Copy16x16Tile(120, temp0)
+			temp0 += 5
+			object.FireIndex++
+
+			object.FireIndex %= 4
+			object.FireTimer = 4
+		else
+			object.FireTimer--
+	end if
+end if
+
+
+
+
+if Stage.actNum == 2
+	object.FGDeformationTimer++
+	if object.FGDeformationTimer >= 2
+		// FG Deformation
+		tileLayer[0].deformationOffset++
+		// FG Water Deformation
+		tileLayer[0].deformationOffsetW++
+		object.FGDeformationTimer = 0
+	end if
+
+	object.BGDeformationTimer++
+	if object.BGDeformationTimer >= 4
+		// BG Deformation
+		tileLayer[1].deformationOffset++
+		// BG Water Deformation
+		tileLayer[1].deformationOffsetW++
+		object.BGDeformationTimer = 0
+	end if
+end if
+
+if Stage.actNum == 1
+	object.PaletteTimer++
+	if object.PaletteTimer == 7
+		object.PaletteTimer = 0
+		RotatePalette(0, 171, 174, false)
+		RotatePalette(1, 171, 174, false)
+	end if
+end if
+if Stage.actNum == 0
+	object.PaletteTimer++
+	if object.PaletteTimer == 7
+		object.PaletteTimer = 0
+		RotatePalette(0, 171, 174, false)
+		RotatePalette(1, 171, 174, false)
+	end if
+end if
+if Stage.actNum == 2
+	object.PaletteTimer++
+	if object.PaletteTimer == 8
+		object.PaletteTimer = 0
+		RotatePalette(0, 188, 191, false)
+		RotatePalette(1, 188, 191, false)
+
+		// FG Palette Cyle
+		RotatePalette(2, 12, 15, false)
+		GetPaletteEntry(2, 12, temp0)
+		SetPaletteEntry(0, 164, temp0)
+
+		RotatePalette(2, 0, 9, false)
+		GetPaletteEntry(2, 0, temp0)
+		SetPaletteEntry(0, 168, temp0)
+
+		RotatePalette(2, 32, 33, false)
+		GetPaletteEntry(2, 32, temp0)
+		SetPaletteEntry(0, 187, temp0)
+
+		// BG Palette Cyle
+		RotatePalette(2, 16, 29, false)
+		GetPaletteEntry(2, 16, temp0)
+		SetPaletteEntry(0, 177, temp0)
+
+		RotatePalette(2, 3, 7, false)
+		GetPaletteEntry(2, 3, temp0)
+		SetPaletteEntry(0, 168, temp0)
+	end	if
+end if
+
+if Water_flashTimer > 0
+	Water_flashTimer--
+end if
+	
+end event
+
+event ObjectDraw
+
+	temp0 = stage.waterLevel
+	temp0 -= screen.yoffset
+
+	if temp0 < 0
+		temp0 = 0
+	end if
+
+	if temp0 > screen.ysize
+		temp0 = screen.ysize
+	end if
+
+	SetActivePalette(0, 0, temp0)
+	if Water_flashTimer > 0
+		SetActivePalette(2, temp0, screen.ysize)
+	else
+		SetActivePalette(1, temp0, screen.ysize)
+	end if
+end event
+
+event ObjectStartup
+	if Stage.actNum == 1
+		SetMusicTrack("01.ogg", 0, MUSIC_LOOP_AIZ_1)
+		LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 256)
+		SpeedUpMusic = AIZSetup_SpeedUpMusic1P
+		SlowDownMusic = AIZSetup_SlowDownMusic1P
+	else
+		SetMusicTrack("02.ogg", 0, MUSIC_LOOP_AIZ_2)
+		LoadPalette("AIZ2_WaterPal.act", 1, 0, 0, 256)
+		SpeedUpMusic = AIZSetup_SpeedUpMusic2P
+		SlowDownMusic = AIZSetup_SlowDownMusic2P
+	end if
+
+	LoadPalette("Cycles/AIZ_2_PalCycle.act", 2, 0, 0, 256)
+
+	animalType1 = TypeName[Flicky]
+	animalType2 = TypeName[Cucky]
+	object[10].type = TypeName[AIZ Setup]
+	object[10].priority = PRIORITY_ACTIVE
+	object[10].drawOrder = 0
+	
+	arrayPos1 = 256
+	while arrayPos1 < 576
+		arrayPos2 = arrayPos1
+		arrayPos2 -= 256
+	//	stage[arrayPos1].deformationData1 = stage[arrayPos2].deformationData1
+		stage[arrayPos1].deformationData3 = stage[arrayPos2].deformationData3
+		arrayPos1++
+	loop
+	SetLayerDeformation(1, 42, 1, 0, 0, 0)
+	SetLayerDeformation(3, 128, 4, 0, 0, 0)
+	if stage.actNum == 2
+		arrayPos0 = 0
+		while arrayPos0 < 576
+			temp0 = arrayPos0
+			temp0 &= 31
+				GetTableValue(stage[arrayPos0].deformationData0, temp0, AIZSetup_deformTableFG)
+				GetTableValue(stage[arrayPos0].deformationData2, temp0, AIZSetup_deformTableBG)
+			arrayPos0++
+		loop
+	end if
+	
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

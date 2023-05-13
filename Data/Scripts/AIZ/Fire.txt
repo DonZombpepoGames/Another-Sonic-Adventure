@@ -1,0 +1,69 @@
+
+// Aliases
+private alias 46 : TYPE_FIRE
+
+// Function declarations
+reserve function Fire_Function109
+reserve function Fire_Function110
+reserve function Fire_Function111
+
+// Static Values
+public value Fire_value32 = 0;
+
+// Tables
+
+
+event ObjectUpdate
+if object.propertyValue == 1
+	object.frame = 6
+	object.animationTimer++
+		if object.animationTimer >= 4
+			object.animationTimer = 0
+			object.frame++
+			if object.frame >= 9
+				object.frame = 6
+			end if
+		end if
+else 
+	object.animationTimer++
+		if object.animationTimer >= 4
+			object.animationTimer = 0
+			object.frame++
+			if object.frame >= 5
+				object.frame = 0
+			end if
+		end if
+end if
+end event 
+
+event ObjectDraw
+	DrawSpriteFX(object.frame, FX_FLIP, object.xpos, object.ypos)
+end event
+
+event ObjectStartup
+	LoadSpriteSheet("AIZ/Objects.gif")
+	//fire 1
+		SpriteFrame(-8, -12, 14, 24, 337, 68)
+		SpriteFrame(-8, -12, 16, 24, 337, 93)
+		SpriteFrame(-8, -12, 16, 24, 337, 118)
+		SpriteFrame(-8, -12, 16, 24, 337, 143)
+		SpriteFrame(-8, -12, 15, 24, 337, 168)
+	//fire 2
+		SpriteFrame(-7, -14,  9, 30, 250, 90)
+		SpriteFrame(-8, -14, 11, 30, 250, 90)
+		SpriteFrame(-8, -12, 16, 24, 337, 118)
+		SpriteFrame(-8, -12, 16, 24, 337, 143)
+
+	foreach (TypeName[Fire], arrayPos0, ALL_ENTITIES)
+		object[arrayPos0].drawOrder = 5
+	next
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

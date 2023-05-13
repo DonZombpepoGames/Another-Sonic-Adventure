@@ -1,0 +1,262 @@
+// ----------------------------------
+// RSDK Project: Sonic 1
+// Script Description: C Ledge Right Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// ========================
+// Aliases
+// ========================
+
+private alias object.value0 : object.timer
+private alias object.value1 : object.delay
+
+private alias 0 : CLEDGER_ACTIVE
+private alias 1 : CLEDGER_COLLAPSE
+private alias 2 : CLEDGER_COLLAPSED
+private alias 3 : CLEDGER_NONE
+private alias 4 : CLEDGER_TILEDELAY
+private alias 5 : CLEDGER_TILEFALL
+
+// Player Aliases
+private alias object.xpos : player.xpos
+private alias object.ypos : player.ypos
+private alias object.yvel : player.yvel
+
+// ========================
+// Tables
+// ========================
+
+public table CLedgeLeft_heightArray
+	32, 32, 32, 32, 32, 32
+	32, 32, 33, 33, 34, 34
+	35, 35, 36, 36, 37, 37
+	38, 38, 39, 39, 40, 40
+	41, 41, 42, 42, 43, 43
+	44, 44, 45, 45, 46, 46
+	47, 47, 48, 48, 48, 48
+	48, 48, 48, 48, 48, 48
+end table
+
+public table CLedgeRight_heightArray
+	32, 32, 32, 32, 32, 32
+	32, 32, 33, 33, 34, 34
+	35, 35, 36, 36, 37, 37
+	38, 38, 39, 39, 40, 40
+	41, 41, 42, 42, 43, 43
+	44, 44, 45, 45, 46, 46
+	47, 47, 48, 48, 48, 48
+	48, 48, 48, 48, 48, 48
+end table
+
+// ========================
+// Function Declarations
+// ========================
+
+
+// ========================
+// Function Definitions
+// ========================
+
+// ========================
+// Events
+// ========================
+
+event ObjectUpdate
+	switch object.state
+	case CLEDGER_ACTIVE
+		break
+
+	case CLEDGER_COLLAPSE
+		if object.timer < 10
+			object.timer++
+		else
+			if FX_FLIP == FLIP_NONE
+				object.frame = 1
+				temp0 = 0
+				temp3 = object.ypos
+				temp3 -= 0x180000
+				temp4 = 30
+				while temp0 < 4
+					temp1 = 0
+					temp2 = object.xpos
+					temp2 -= 0x280000
+					while temp1 < 6
+						CreateTempObject(TypeName[C Ledge Right], object.frame, temp2, temp3)
+						object[tempObjectPos].state = CLEDGER_TILEDELAY
+						object[tempObjectPos].delay = temp4
+						object.frame++
+						temp1++
+						temp2 += 0x100000
+						temp4 -= 4
+					loop
+					temp4 += 22
+					temp0++
+					temp3 += 0x100000
+				loop
+				PlaySfx(SfxName[Ledge Break L], false)
+				SetSfxAttributes(SfxName[Ledge Break L], -1, -100)
+				PlaySfx(SfxName[Ledge Break R], false)
+				SetSfxAttributes(SfxName[Ledge Break R], -1, 100)
+				object.timer = 0
+				object.state++
+			else
+				object.frame = 1
+				temp0 = 0
+				temp3 = object.ypos
+				temp3 -= 0x180000
+				temp4 = 30
+				while temp0 < 4
+					temp1 = 0
+					temp2 = object.xpos
+					temp2 -= 0x280000
+					while temp1 < 6
+						CreateTempObject(TypeName[C Ledge Right], object.frame, temp2, temp3)
+						object[tempObjectPos].state = CLEDGER_TILEDELAY
+						object[tempObjectPos].delay = temp4
+						object.frame++
+						temp1++
+						temp2 += 0x100000
+						temp4 -= 4
+					loop
+					temp4 += 22
+					temp0++
+					temp3 += 0x100000
+				loop
+				PlaySfx(SfxName[Ledge Break L], false)
+				SetSfxAttributes(SfxName[Ledge Break L], -1, -100)
+				PlaySfx(SfxName[Ledge Break R], false)
+				SetSfxAttributes(SfxName[Ledge Break R], -1, 100)
+				object.timer = 0
+				object.state++
+			end if
+		end if
+		break
+
+	case CLEDGER_COLLAPSED
+		if object.timer < 20
+			object.timer++
+		else
+			object.timer = 0
+			object.state++
+			ResetObjectEntity(object.entityPos, TypeName[Blank Object], 0, object.xpos, object.ypos)
+		end if
+		break
+
+	case CLEDGER_NONE
+		break
+
+	case CLEDGER_TILEDELAY
+		if object.timer < object.delay
+			object.timer++
+		else
+			object.timer = 0
+			object.state++
+		end if
+		break
+
+	case CLEDGER_TILEFALL
+		object.ypos += object.yvel
+		object.yvel += 0x4000
+		if object.outOfBounds == true
+			object.type = TypeName[Blank Object]
+		end if
+		break
+
+	end switch
+	
+	if object.state < CLEDGER_NONE
+		foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+			if player[currentPlayer].yvel >= 0
+				temp0 = player[currentPlayer].xpos
+				temp0 -= object.xpos
+				temp0 >>= 17
+				temp0 += 0
+				if temp0 < 0
+					temp0 = 0
+				end if
+				if temp0 > 47
+					temp0 = 47
+				end if
+				GetTableValue(temp1, temp0, CLedgeLeft_heightArray)
+				temp1 -= 64
+				temp0 = temp1
+				temp0 += 16
+				BoxCollisionTest(C_PLATFORM, object.entityPos, -48, temp1, 48, temp0, currentPlayer, C_BOX, C_BOX, C_BOX, C_BOX)
+				if checkResult == true
+					player[currentPlayer].ypos += 0x40000
+					if object.state == CLEDGER_ACTIVE
+						object.state = CLEDGER_COLLAPSE
+					end if
+				end if
+			end if
+		next
+	end if
+end event
+
+
+event ObjectDraw
+	switch object.state
+	case CLEDGER_ACTIVE
+	case CLEDGER_COLLAPSE
+		DrawSpriteFX(0, FX_FLIP, object.xpos, object.ypos)
+		break
+
+	case CLEDGER_TILEDELAY
+	case CLEDGER_TILEFALL
+		DrawSpriteFX(object.propertyValue, FX_FLIP, object.xpos, object.ypos)
+		break
+
+	case CLEDGER_COLLAPSED
+	case CLEDGER_NONE
+	default
+		break
+		
+	end switch
+
+	switch object.propertyValue
+	case 0
+		DrawSpriteFX(0, FX_FLIP, object.xpos, object.ypos)
+		break
+
+	case 1
+	case 2
+
+
+	case 3
+	end switch
+end event
+
+
+
+event ObjectStartup
+	if stage.actnum == 1
+		LoadSpriteSheet("AIZ/Objects2.gif")
+	else 
+		LoadSpriteSheet("AIZ/Objects3.gif")
+	end if
+	// 0 - Full Platform Frame
+	SpriteFrame(-48, -32, 96, 64, 415, 192)
+
+	// All the Platform "Tile" Frames are done in a loop
+	temp0 = 192
+	while temp0 < 256	// sprY + height (192 + 64 = 256)
+		temp1 = 415
+		while temp1 < 511	// sprX + width (415 + 96 = 511)
+			SpriteFrame(-8, -8, 16, 16, temp1, temp0)
+			temp1 += 16
+		loop
+		temp0 += 16
+	loop
+
+end event
+
+event RSDKDraw
+	DrawSpriteFX(0, FX_FLIP, object.xpos, object.ypos)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event
