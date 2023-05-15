@@ -16,7 +16,7 @@ This is still in development and is not very advanced.
 
 #### What the fuck is this?
 
-The project description explains that
+The beginning of this file explains that
 
 #### It uses the v4 or v5u Decomp?
 
