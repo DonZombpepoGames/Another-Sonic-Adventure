@@ -1,0 +1,13 @@
+//RSDK Project: Another Sonic Adventure
+//Object: ASA Buttons
+//Creator: Zombstech
+event ObjectDraw
+	temp0 = screen.xcenter
+	temp0 -= 28
+	DrawSpriteScreenXY(0, temp0, 116)
+end event
+
+event ObjectStartup
+	LoadSpriteSheet("Global/asaMenu.gif")
+	SpriteFrame(0, 0, 65, 53, 0, 70)
+end event

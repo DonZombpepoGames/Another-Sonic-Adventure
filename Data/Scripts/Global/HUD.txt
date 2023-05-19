@@ -32,7 +32,9 @@ reserve function HUD_Draw_Mobile
 // ========================
 
 private function HUD_Draw_Standard
-
+	DrawSpriteScreenXY(40, 16, 207)
+	DrawSpriteScreenXY(55, 38, 211)
+	DrawNumbers(0, 56, 211, coinCount, 2, 8, 0)
 #platform: USE_ORIGINS
 	// temp4 will tell whether to draw lives or coins
 	temp4 = game.coinMode

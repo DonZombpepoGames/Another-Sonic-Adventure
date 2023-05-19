@@ -1,0 +1,13 @@
+//RSDK Project: Another Sonic Adventure
+//Object: ASA Logo for the menu
+//Creator: Zombstech
+event ObjectDraw
+	temp0 = screen.xcenter
+	temp0 -= 32 
+	DrawSpriteScreenXY(0, temp0, 36)
+end event
+
+event ObjectStartup
+	LoadSpriteSheet("Global/asaMenu.gif")
+	SpriteFrame(-32, 0, 133, 69, 0, 0)
+end event

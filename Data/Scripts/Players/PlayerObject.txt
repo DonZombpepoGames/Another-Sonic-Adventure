@@ -2511,7 +2511,7 @@ public function Player_HandleDropDash
 						if player.animation == ANI_JUMPING
 							player.frame = 1
 							player.animationTimer = 0
-							player.animationSpeed = 1
+							player.animationSpeed = 0
 						end if
 					end if
 				end if

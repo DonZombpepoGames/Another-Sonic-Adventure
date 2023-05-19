@@ -207,11 +207,20 @@ end event
 
 
 event ObjectStartup
-	LoadSpriteSheet("GHZ/Objects.gif")
-	SpriteFrame(-21, -16, 42, 31, 138, 157)
-	SpriteFrame(-22, -16, 44, 31, 98, 189)
-	SpriteFrame(-22, -16, 44, 31, 98, 221)
-	SpriteFrame(-24, -15, 48, 30, 143, 189)
+	CheckCurrentStageFolder("SYZ01")
+	if checkResult == false
+		LoadSpriteSheet("GHZ/Objects.gif")
+		SpriteFrame(-21, -16, 42, 31, 138, 157)
+		SpriteFrame(-22, -16, 44, 31, 98, 189)
+		SpriteFrame(-22, -16, 44, 31, 98, 221)
+		SpriteFrame(-24, -15, 48, 30, 143, 189)
+	else
+		LoadSpriteSheet("SYZ/Objects.gif")
+		SpriteFrame(-21, -16, 42, 31, 184, 1)
+		SpriteFrame(-22, -16, 44, 31, 184, 34)
+		SpriteFrame(-22, -16, 44, 31, 184, 66)
+		SpriteFrame(-24, -15, 48, 30, 184, 173)
+	end if
 	
 
 

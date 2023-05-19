@@ -42,10 +42,64 @@ end event
 
 
 event ObjectStartup
-	LoadSpriteSheet("Mission/Objects.gif")
 	
-	// Mission Block Frame
-	SpriteFrame(-16, -16, 32, 32, 1, 18)
+	// Chech where the fuck is the stage that is actually running and take the correct sprite depending on the zone
+	CheckCurrentStageFolder("PPZ01")
+	if checkResult == true
+		LoadSpriteSheet("Mission/PPZ.gif")	
+	end if
+	CheckCurrentStageFolder("CEZ")
+	if checkResult == true
+		LoadSpriteSheet("Mission/CEZ.gif")
+	end if
+	CheckCurrentStageFolder("SYZ01")
+	if checkResult == true
+		LoadSpriteSheet("Mission/SYZ.gif")
+	end if
+	CheckCurrentStageFolder("AIZ01")
+	if checkResult == true
+		LoadSpriteSheet("Mission/AIZ.gif")
+	end if
+	CheckCurrentStageFolder("AIZ02")
+	if checkResult == true
+		LoadSpriteSheet("Mission/AIZ.gif")
+	end if
+	CheckCurrentStageFolder("LRZ01")
+	if checkResult == true
+		LoadSpriteSheet("Mission/LRZ.gif")
+	end if
+	CheckCurrentStageFolder("HPZ")
+	if checkResult == true
+		LoadSpriteSheet("Mission/HPZ.gif")
+	end if
+	CheckCurrentStageFolder("WZ")
+	if checkResult == true
+		LoadSpriteSheet("Mission/WZ.gif")
+	end if
+	CheckCurrentStageFolder("FHZ")
+	if checkResult == true
+		LoadSpriteSheet("Mission/FHZ.gif")
+	end if
+	CheckCurrentStageFolder("APZ")
+	if checkResult == true
+		LoadSpriteSheet("Mission/APZ.gif")
+	end if
+	CheckCurrentStageFolder("SSZ")
+	if checkResult == true
+		LoadSpriteSheet("Mission/SSZ.gif")
+	end if
+	CheckCurrentStageFolder("SSWZ")
+	if checkResult == true
+		LoadSpriteSheet("Mission/SSWZ.gif")
+	end if
+	CheckCurrentStageFolder("Zone02")
+	if checkResult == true
+		LoadSpriteSheet("Mission/CFZ.gif")
+	end if
+
+	//the actual spriteframe
+
+	SpriteFrame(-16, -16, 32, 32, 0, 0)
 end event
 
 
