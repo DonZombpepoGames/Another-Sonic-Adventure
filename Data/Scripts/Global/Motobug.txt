@@ -177,19 +177,36 @@ event ObjectStartup
 	CheckCurrentStageFolder("Zone01")
 #platform: USE_ORIGINS
 	CheckCurrentStageFolder("SYZ01")
-	if checkResult == false
-		LoadSpriteSheet("GHZ/Objects.gif")
-		SpriteFrame(-21, -13, 40, 28, 98, 127)
-		SpriteFrame(-20, -14, 39, 29, 139, 127)
-		SpriteFrame(-20, -13, 39, 28, 98, 156)
-		SpriteFrame(-20, -14, 39, 29, 139, 127)
-	else
+	if checkResult == true
 		LoadSpriteSheet("GHZ/syz.gif")
 		SpriteFrame(-21, -13, 40, 28, 98, 127)
 		SpriteFrame(-20, -14, 39, 29, 139, 127)
 		SpriteFrame(-20, -13, 39, 28, 98, 156)
 		SpriteFrame(-20, -14, 39, 29, 139, 127)
-	
+	end if
+	CheckCurrentStageFolder("AIZ01")
+	if checkResult == true
+		LoadSpriteSheet("AIZ/Objects5.gif")
+		SpriteFrame(-21, -13, 40, 28, 98, 127)
+		SpriteFrame(-20, -14, 39, 29, 139, 127)
+		SpriteFrame(-20, -13, 39, 28, 98, 156)
+		SpriteFrame(-20, -14, 39, 29, 139, 127)
+	end if
+	CheckCurrentStageFolder("FHZ")
+	if checkResult == true
+		LoadSpriteSheet("GHZ/Objects.gif")
+		SpriteFrame(-21, -13, 40, 28, 98, 127)
+		SpriteFrame(-20, -14, 39, 29, 139, 127)
+		SpriteFrame(-20, -13, 39, 28, 98, 156)
+		SpriteFrame(-20, -14, 39, 29, 139, 127)
+	end if
+	CheckCurrentStageFolder("DDZ")
+	if checkResult == true
+		LoadSpriteSheet("GHZ/ObjectsDD.gif")
+		SpriteFrame(-21, -13, 40, 28, 98, 127)
+		SpriteFrame(-20, -14, 39, 29, 139, 127)
+		SpriteFrame(-20, -13, 39, 28, 98, 156)
+		SpriteFrame(-20, -14, 39, 29, 139, 127)
 	end if
 	// Setup all Motobugs
 	foreach (TypeName[Motobug], arrayPos0, ALL_ENTITIES)

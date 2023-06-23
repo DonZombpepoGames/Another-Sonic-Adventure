@@ -1,0 +1,12 @@
+// ----------------------------------
+// RSDK Project: Another Sonic Adventure
+// Script Description: Trigger to display the titlecard
+// Script Author: Zombstech
+// ----------------------------------
+event ObjectUpdate
+	BoxCollisionTest(C_TOUCH, object.entityPos, 0, 0, 32, 32, currentPlayer, C_BOX, C_BOX, C_BOX, C_BOX)
+	if checkResult == true
+		CreateTempObject(TypeName[Title Card FHZ], 0, object.xpos, object.ypos)
+		ResetObjectEntity(object.entityPos, TypeName[Blank Object], 0, 0, 0)
+	end if
+end event

@@ -221,6 +221,14 @@ event ObjectStartup
 		SpriteFrame(-22, -16, 44, 31, 184, 66)
 		SpriteFrame(-24, -15, 48, 30, 184, 173)
 	end if
+	CheckCurrentStageFolder("AIZ01")
+	if checkResult == true
+		LoadSpriteSheet("AIZ/Objects5.gif")
+		SpriteFrame(-21, -16, 42, 31, 184, 1)
+		SpriteFrame(-22, -16, 44, 31, 184, 34)
+		SpriteFrame(-22, -16, 44, 31, 184, 66)
+		SpriteFrame(-24, -15, 48, 30, 184, 173)
+	end if
 	
 
 

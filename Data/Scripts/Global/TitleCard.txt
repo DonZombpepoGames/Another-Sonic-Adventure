@@ -430,7 +430,7 @@ end event
 
 
 event ObjectStartup
-
+	object.drawOrder = 7
 	LoadSpriteSheet("Global/Display.gif")
 
 	// Title card frames

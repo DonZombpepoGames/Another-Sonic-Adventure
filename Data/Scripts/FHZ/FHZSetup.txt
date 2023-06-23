@@ -1,0 +1,166 @@
+// ----------------------------------
+// RSDK Project:  Another sonic Adventure
+// Script Description:    Faded Hill Setup Object 
+// Script Author: Zombstech
+// ----------------------------------
+
+// ========================
+// Aliases
+// ========================
+
+// Tracks
+private alias 0 : TRACK_STAGE
+private alias 1 : TRACK_ACTFINISH
+private alias 2 : TRACK_INVINCIBLE
+private alias 3 : TRACK_CONTINUE
+private alias 4 : TRACK_BOSS
+private alias 5 : TRACK_GAMEOVER
+private alias 6 : TRACK_DROWNING
+private alias 7 : TRACK_SUPER
+
+// Reserved Object Slots Aliases
+private alias 10 : SLOT_ZONESETUP
+private alias 25 : SLOT_MUSICEVENT_CHANGE
+private alias 26 : SLOT_MUSICEVENT_BOSS
+
+// Music Events
+private alias 0 : MUSICEVENT_FADETOBOSS
+private alias 1 : MUSICEVENT_FADETOSTAGE
+private alias 2 : MUSICEVENT_TRANSITION
+
+private alias 0 : MUSICEVENT_FLAG_NOCHANGE
+private alias 1 : MUSICEVENT_FLAG_SPEEDUP
+private alias 2 : MUSICEVENT_FLAG_SLOWDOWN
+
+// Music Loops
+
+private alias 651206 : MUSIC_LOOP_Faded Hill
+private alias 1 : MUSIC_LOOP_Faded Hill_F
+
+private alias 38679  : MUSIC_LOOP_INV
+private alias 30897  : MUSIC_LOOP_INV_F
+
+// ========================
+// Function Declarations
+// ========================
+
+reserve function Faded HillSetup_SpeedUpMusic
+	CheckEqual(object[SLOT_MUSICEVENT_CHANGE].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[SLOT_MUSICEVENT_CHANGE].propertyValue, MUSICEVENT_TRANSITION)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, MUSICEVENT_FLAG_NOCHANGE)
+	temp0 &= checkResult
+	if temp0 == 0
+		switch music.currentTrack
+		case TRACK_STAGE
+			SetMusicTrack("Invincibility_F.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV_F)
+			SwapMusicTrack("OilOcean_F.ogg_F.ogg", TRACK_STAGE, MUSIC_LOOP_Faded Hill_F, 8000)
+			break
+
+		case TRACK_INVINCIBLE
+			SetMusicTrack("OilOcean_F.ogg_F.ogg", TRACK_STAGE, MUSIC_LOOP_Faded Hill_F)
+			SwapMusicTrack("Invincibility_F.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV_F, 8000)
+			break
+
+		case TRACK_BOSS
+		case TRACK_DROWNING
+		case TRACK_SUPER
+			SetMusicTrack("OilOcean_F.ogg_F.ogg", TRACK_STAGE, MUSIC_LOOP_Faded Hill_F)
+			SetMusicTrack("Invincibility_F.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV_F)
+			break
+
+		end switch
+	else
+		stage.musicFlag = MUSICEVENT_FLAG_SPEEDUP
+	end if
+end function
+
+reserve function Faded HillSetup_SlowDownMusic
+CheckEqual(object[SLOT_MUSICEVENT_CHANGE].type, TypeName[Music Event])
+temp0 = checkResult
+CheckEqual(object[SLOT_MUSICEVENT_CHANGE].propertyValue, MUSICEVENT_TRANSITION)
+temp0 &= checkResult
+CheckEqual(stage.musicFlag, MUSICEVENT_FLAG_NOCHANGE)
+temp0 &= checkResult
+if temp0 == 0
+		switch music.currentTrack
+		case TRACK_STAGE
+			SetMusicTrack("Invincibility.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV)
+			SwapMusicTrack("OilOcean.ogg.ogg", TRACK_STAGE, MUSIC_LOOP_Faded Hill, 12500)
+			break
+
+		case TRACK_INVINCIBLE
+			SetMusicTrack("OilOcean.ogg.ogg", TRACK_STAGE, MUSIC_LOOP_Faded Hill)
+			SwapMusicTrack("Invincibility.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV, 12500)
+			break
+
+		case TRACK_BOSS
+		case TRACK_DROWNING
+		case TRACK_SUPER
+			SetMusicTrack("OilOcean.ogg.ogg", TRACK_STAGE, MUSIC_LOOP_Faded Hill)
+			SetMusicTrack("Invincibility.ogg", TRACK_INVINCIBLE, MUSIC_LOOP_INV)
+			break
+
+		end switch
+	else
+		stage.musicFlag = MUSICEVENT_FLAG_SLOWDOWN
+	end if
+end function
+
+// ========================
+// Static Values
+// ========================
+
+// ========================
+// Tables
+// ========================
+
+// ========================
+// Function Definitions
+// ========================
+
+function Faded HillSetup_SpeedUpMusic
+end function
+
+function Faded HillSetup_SlowDownMusic
+end function
+
+// ========================
+// Events
+// ========================
+
+event ObjectUpdate
+
+end event
+
+event ObjectDraw
+
+end event
+
+event ObjectStartup
+  SetMusicTrack("OilOcean.ogg.ogg", 0, MUSIC_LOOP_Faded Hill)
+  SpeedUpMusic = Faded HillSetup_SpeedUpMusic
+  SlowDownMusic = Faded HillSetup_SlowDownMusic
+
+	animalType1 = TypeName[Flicky]
+	animalType2 = TypeName[Ricky]
+	object[SLOT_ZONESETUP].type = TypeName[Faded Hill Setup]
+	object[SLOT_ZONESETUP].priority = PRIORITY_ACTIVE
+
+end event
+
+// ========================
+// Editor Events
+// ========================
+
+event RSDKDraw
+  DrawSprite(0)
+end event
+
+event RSDKLoad
+  LoadSpriteSheet(Global/Display.gif)
+  SpriteFrame(-16, -16, 32, 32, 1, 143)
+
+  SetVariableAlias(ALIAS_VAR_PROPVAL, unused)
+end event
