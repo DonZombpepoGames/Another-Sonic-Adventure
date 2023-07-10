@@ -621,10 +621,11 @@ event ObjectStartup
 		end if
 	next
 	
-	LoadSpriteSheet("Global/Water.gif")
-	SpriteFrame(0, -7, 256, 15, 0, 0)
-	SpriteFrame(0, -7, 256, 15, 0, 16)
-	SpriteFrame(0, -7, 256, 15, 0, 32)
+	LoadSpriteSheet("ARZ/Objects2.gif")
+	SpriteFrame(0, -7, 256, 16, 0, 0)
+	SpriteFrame(0, -7, 256, 16, 0, 16)
+	SpriteFrame(0, -7, 256, 16, 0, 32)
+	SpriteFrame(0, -7, 256, 16, 0, 48)
 
 	BrokenMonitor_ResetDrownMusic = Water_ResetDrownMusic
 end event

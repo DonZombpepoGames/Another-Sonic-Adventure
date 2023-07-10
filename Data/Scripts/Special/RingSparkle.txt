@@ -8,6 +8,7 @@
 // ========================
 // Aliases
 // ========================
+
 private alias object.value3  : object.localPos.z
 private alias object.value4  : object.worldPos.x
 private alias object.value5  : object.worldPos.y
@@ -15,6 +16,9 @@ private alias object.value6  : object.worldPos.z
 
 // Halfpipe Aliases
 private alias object.value13 : halfpipe.playerPos.z
+
+// Face Buffer Flag Aliases
+private alias 7 : FACE_SPRITE_3D
 
 
 // ========================
@@ -24,7 +28,7 @@ private alias object.value13 : halfpipe.playerPos.z
 event ObjectUpdate
 	arrayPos0 = scene3D.vertexCount
 	arrayPos1 = scene3D.faceCount
-	faceBuffer[arrayPos1].flag = 7
+	faceBuffer[arrayPos1].flag = FACE_SPRITE_3D
 	faceBuffer[arrayPos1].a = arrayPos0
 	vertexBuffer[arrayPos0].x = object.worldPos.x
 	vertexBuffer[arrayPos0].y = object.worldPos.y
@@ -74,11 +78,16 @@ end event
 
 event ObjectStartup
 	LoadSpriteSheet("Special/Objects.gif")
+	
 	SpriteFrame(-14, -16, 24, 27, 323, 108)
 	SpriteFrame(-14, -12, 30, 22, 348, 122)
 	SpriteFrame(-11, -11, 24, 27, 323, 126)
 end event
 
+
+// ========================
+// Editor Events
+// ========================
 
 event RSDKDraw
 	DrawSprite(0)

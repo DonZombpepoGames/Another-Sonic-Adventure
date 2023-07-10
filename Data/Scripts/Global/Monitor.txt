@@ -8,11 +8,23 @@
 // ========================
 // Aliases
 // ========================
-
 private alias object.value0  : object.contentsPos.y
 private alias object.value1  : object.timer
 private alias object.value3  : object.rewardPlayer
 private alias object.value31 : object.altContents
+
+// Player Aliases
+private alias object.propertyValue : player.character
+private alias object.yvel : player.yvel
+private alias object.gravity : player.gravity
+private alias object.animation : player.animation
+private alias object.value16 : player.isSidekick
+private alias object.value17 : debugMode.currentSelection
+private alias object.value25 : player.gravityStrength
+private alias object.value40 : player.hitboxLeft
+private alias object.value38 : player.hitboxTop
+private alias object.value41 : player.hitboxRight
+private alias object.value39 : player.hitboxBottom
 
 // Monitor type aliases
 private alias 0  : MONITOR_BLANK
@@ -40,29 +52,8 @@ private alias 1 : MONITOR_STATE_FALL
 // Broken monitor states
 private alias 0 : MONITOR_STATE_RISE
 
-// Player Aliases
-private alias object.state : player.state
-private alias object.controlMode : player.controlMode
-private alias object.propertyValue : player.character
-private alias object.yvel : player.yvel
-private alias object.gravity : player.gravity
-private alias object.animation : player.animation
-private alias object.value16 : player.isSidekick
-private alias object.value17 : debugMode.currentSelection
-private alias object.value25 : player.gravityStrength
-private alias object.value40 : player.hitboxLeft
-private alias object.value38 : player.hitboxTop
-private alias object.value41 : player.hitboxRight
-private alias object.value39 : player.hitboxBottom
-
 // Game Modes
 private alias 2 : MODE_TIMEATTACK
-
-// Shield Types Aliases
-private alias 0 : SHIELDTYPE_S2
-private alias 1 : SHIELDTYPE_S3
-private alias 2 : SHIELDTYPE_RAND_S2
-private alias 3 : SHIELDTYPE_RAND_S3
 
 // Path ID Aliases
 private alias 0 : PATH_A
@@ -71,7 +62,6 @@ private alias 0 : PATH_A
 // ========================
 // Function Declarations
 // ========================
-
 reserve function Monitor_DebugDraw
 reserve function Monitor_DebugSpawn
 
@@ -79,7 +69,6 @@ reserve function Monitor_DebugSpawn
 // ========================
 // Static Values
 // ========================
-
 private value Monitor_startDebugID = 0
 
 
@@ -175,11 +164,13 @@ event ObjectUpdate
 	foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
 		CheckGreater(player[currentPlayer].yvel, -1)
 		temp0 = checkResult
-		CheckEqual(player[currentPlayer].gravity, GRAVITY_GROUND)
+		CheckEqual(player[currentPlayer].gravity, 0)
 		temp0 |= checkResult
 		if temp0 == true
 			CheckEqual(player[currentPlayer].animation, ANI_JUMPING)
 			temp0 = checkResult
+			CheckEqual(player[currentPlayer].animation, ANI_DROPDASH)
+			temp0 |= checkResult
 			CheckEqual(player[currentPlayer].animation, ANI_GLIDING)
 			temp0 |= checkResult
 			CheckEqual(player[currentPlayer].animation, ANI_GLIDING_STOP)
@@ -213,34 +204,31 @@ event ObjectUpdate
 							temp0 %= 10
 
 							if options.vsMode == true
-								if player[currentPlayer].character == PLAYER_SONIC_ALONE // only let Sonic have access to the elemental shields, they're useless to all other chars anyways
+								if player[currentPlayer].character == 0
 									GetTableValue(object.propertyValue, temp0, Monitor_randTypesTable_S3)
 								else
 									GetTableValue(object.propertyValue, temp0, Monitor_randTypesTable_S2)
 								end if
 
 								if object.propertyValue == MONITOR_TELEPORT
-									// If we have a Teleport monitor but either of the characters aren't ready to be teleported at the moment, then
-									// just transform the monitor into a more generic reward instead
-									
-									if player[0].controlMode == CONTROLMODE_NONE
+									if object[0].controlMode == CONTROLMODE_NONE
 										object.propertyValue = MONITOR_SHIELD_BLUE
 									end if
 
-									if player[1].controlMode == CONTROLMODE_NONE
+									if object[1].controlMode == CONTROLMODE_NONE
 										object.propertyValue = MONITOR_SHIELD_BLUE
 									end if
 
-									if player[0].state == Player_State_Static
+									if object[0].state == Player_State_Static
 										object.propertyValue = MONITOR_RINGS
 									end if
 
-									if player[1].state == Player_State_Static
-										object.propertyValue = MONITOR_RINGS
+									if object[1].state == Player_State_Static
+										object.propertyValue = MONITOR_RANDOM
 									end if
 								end if
 							else
-								if options.shieldType == SHIELDTYPE_RAND_S3
+								if options.shieldType == 3
 									GetTableValue(object.propertyValue, temp0, Monitor_randTypesTable_S3)
 								else
 									GetTableValue(object.propertyValue, temp0, Monitor_randTypesTable_S2)
@@ -290,7 +278,6 @@ end event
 
 event ObjectDraw
 	DrawSprite(0)
-	
 	switch StageSetup_monitorOverlayFrame
 	case 0
 	case 1
@@ -316,42 +303,36 @@ end event
 
 event ObjectStartup
 	LoadSpriteSheet("Global/Items.gif")
-	
-	// 0 - Base monitor sprite
 	SpriteFrame(-16, -16, 32, 32, 18, 1)
-	
-	// Icons
-	SpriteFrame(-8, -9, 16, 14, 18, 51) // 1 - Static 1
-	SpriteFrame(-8, -9, 16, 14, 35, 51) // 2 - Static 2
-	SpriteFrame(-8, -9, 16, 14, 18, 66) // 3 - MONITOR_RINGS - Rings
-	SpriteFrame(-8, -9, 16, 14, 35, 66) // 4 - MONITOR_RINGS - Blue Shield
-	SpriteFrame(-8, -9, 16, 14, 18, 81) // 5 - MONITOR_INVINCIBILITY - Invincibility
-	SpriteFrame(-8, -9, 16, 14, 35, 81) // 6 - MONITOR_SPEEDSHOES - Speed Shoes
+	SpriteFrame(-8, -9, 16, 14, 18, 51)
+	SpriteFrame(-8, -9, 16, 14, 35, 51)
+	SpriteFrame(-8, -9, 16, 14, 18, 66)
+	SpriteFrame(-8, -9, 16, 14, 35, 66)
+	SpriteFrame(-8, -9, 16, 14, 18, 81)
+	SpriteFrame(-8, -9, 16, 14, 35, 81)
 #platform: USE_ORIGINS
 	if game.coinMode == false
 #endplatform
-		SpriteFrame(-8, -9, 16, 14, 18, 96)  // 7 - MONITOR_1UP_SONIC - Sonic
-		SpriteFrame(-8, -9, 16, 14, 35, 96)  // 8 - MONITOR_1UP_TAILS - Tails
-		SpriteFrame(-8, -9, 16, 14, 18, 111) // 9 - MONITOR_1UP_KNUX  - Knuckles
+		SpriteFrame(-8, -9, 16, 14, 18, 96)
+		SpriteFrame(-8, -9, 16, 14, 35, 96)
+		SpriteFrame(-8, -9, 16, 14, 18, 111)
 #platform: USE_ORIGINS
 	else
-		SpriteFrame(-8, -9, 16, 14, 35, 186) // 7 - MONITOR_1UP_SONIC - Coin
-		SpriteFrame(-8, -9, 16, 14, 35, 186) // 8 - MONITOR_1UP_TAILS - Coin (again)
-		SpriteFrame(-8, -9, 16, 14, 35, 186) // 9 - MONITOR_1UP_KNUX  - Coin (woah)
+		SpriteFrame(-8, -9, 16, 14, 35, 186)
+		SpriteFrame(-8, -9, 16, 14, 35, 186)
+		SpriteFrame(-8, -9, 16, 14, 35, 186)
 	end if
 #endplatform
-	SpriteFrame(-8, -9, 16, 14, 35, 111) // 10 - MONITOR_SUPER - Super
-	SpriteFrame(-8, -9, 16, 14, 18, 141) // 11 - MONITOR_SHIELD_BUBBLE - Bubble
-	SpriteFrame(-8, -9, 16, 14, 35, 126) // 12 - MONITOR_SHIELD_FIRE - Flame
-	SpriteFrame(-8, -9, 16, 14, 18, 126) // 13 - MONITOR_SHIELD_LIGHTNING - Lightning
-	SpriteFrame(-8, -9, 16, 14, 35, 141) // 14 - MONITOR_EGGMAN - Eggman
-	SpriteFrame(-8, -9, 16, 14, 18, 156) // 15 - MONITOR_TELEPORT - Teleport
-	SpriteFrame(-8, -9, 16, 14, 35, 156) // 16 - MONITOR_RANDOM - Random
-	SpriteFrame(-8, -9, 16, 14, 18, 171) // 17 - MONITOR_DEBUG_SHIELD - Debug Shields
-	SpriteFrame(-8, -9, 16, 14, 35, 171) // 18 - Debug Emeralds
-	
-	// (The Mania monitor introduced in Origins is unused btw)
-	
+	SpriteFrame(-8, -9, 16, 14, 35, 111)
+	SpriteFrame(-8, -9, 16, 14, 18, 141)
+	SpriteFrame(-8, -9, 16, 14, 35, 126)
+	SpriteFrame(-8, -9, 16, 14, 18, 126)
+	SpriteFrame(-8, -9, 16, 14, 35, 141)
+	SpriteFrame(-8, -9, 16, 14, 18, 156)
+	SpriteFrame(-8, -9, 16, 14, 35, 156)
+	SpriteFrame(-8, -9, 16, 14, 18, 171)
+	SpriteFrame(-8, -9, 16, 14, 35, 171)
+
 	Monitor_startDebugID = DebugMode_ObjCount
 	Monitor_startDebugID--
 	temp0 = MONITOR_BLANK
@@ -414,28 +395,25 @@ event ObjectStartup
 		default
 		case 0
 			break
-			
 		case 1
 			foreach (TypeName[Monitor], arrayPos0, ALL_ENTITIES)
 				object[arrayPos0].propertyValue = MONITOR_RANDOM
 			next
 			break
-			
 		case 2
 			foreach (TypeName[Monitor], arrayPos0, ALL_ENTITIES)
 				object[arrayPos0].propertyValue = MONITOR_TELEPORT
 			next
 			break
-			
 		end switch
 	else
 		// Set up the shield monitors
-		if options.shieldType > SHIELDTYPE_S3
+		if options.shieldType > 1
 			foreach (TypeName[Monitor], arrayPos0, ALL_ENTITIES)
 				object[arrayPos0].propertyValue = MONITOR_RANDOM
 			next
 		else
-			if options.shieldType == SHIELDTYPE_S2
+			if options.shieldType == 0
 				foreach (TypeName[Monitor], arrayPos0, ALL_ENTITIES)
 					if object[arrayPos0].propertyValue >= MONITOR_SHIELD_BUBBLE
 						if object[arrayPos0].propertyValue <= MONITOR_SHIELD_LIGHTNING
@@ -468,32 +446,27 @@ event RSDKEdit
 		case EDIT_VAR_PROPVAL // property value
 			checkResult = object.propertyValue
 			break
-			
 		case 0 // contents
 			checkResult = object.propertyValue
 			checkResult &= 0xF
 			break
-			
 		case 1 // altContents
 			checkResult = object.propertyValue
 			checkResult >>= 4
 			checkResult &= 0xF
 			break
-			
 		end switch
 	else
 		switch editor.variableID
 		case EDIT_VAR_PROPVAL // property value
 			object.propertyValue = editor.variableValue
 			break
-			
 		case 0 // contents
 			temp0 = editor.variableValue
 			temp0 &= 0xF
 			object.propertyValue &= 0xF0
 			object.propertyValue |= temp0
 			break
-			
 		case 1 // altContents
 			temp0 = editor.variableValue
 			temp0 &= 0xF
@@ -501,7 +474,6 @@ event RSDKEdit
 			object.propertyValue &= 0xF
 			object.propertyValue |= temp0
 			break
-			
 		end switch
 	end if
 end event

@@ -288,13 +288,13 @@ event ObjectUpdate
 		break
 
 	case TITLECARD_EXITTITLECARD
-		stage.timeEnabled = true
+
 		object.actNamePos += 32
 		object.zonePos -= 32
-		if object.timer < 20
+		if object.timer < 10
 			object.timer++
 		else
-			object.timer = 0
+			object.timer = 20
 			
 			object.type = TypeName[Blank Object]
 		end if

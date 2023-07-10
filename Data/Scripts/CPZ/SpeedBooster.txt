@@ -8,7 +8,6 @@
 // ========================
 // Aliases
 // ========================
-
 private alias object.value0 : object.boostSpeed
 private alias object.value1 : object.timer
 
@@ -36,7 +35,6 @@ reserve function SpeedBooster_DebugSpawn
 // ========================
 // Static Values
 // ========================
-
 private value SpeedBooster_startDebugID = 0
 
 
@@ -86,7 +84,7 @@ event ObjectUpdate
 			if player[currentPlayer].gravity == 0
 				if object.timer == 0
 					object.timer = 2
-					PlaySfx(SfxName[Release], false)
+					PlaySfx(SfxName[Spring], false)
 				end if
 
 				temp1 = false
@@ -105,8 +103,10 @@ event ObjectUpdate
 				if temp1 == true
 					player[currentPlayer].state = Player_State_Ground
 					if player[currentPlayer].animation != ANI_JUMPING
-						if player[currentPlayer].animation != ANI_RUNNING
-							player[currentPlayer].animation = ANI_WALKING
+						if player[currentPlayer].animation != ANI_DROPDASH
+							if player[currentPlayer].animation != ANI_RUNNING
+								player[currentPlayer].animation = ANI_WALKING
+							end if
 						end if
 					end if
 
@@ -127,15 +127,25 @@ end event
 
 
 event ObjectDraw
-	DrawSprite(0)
+	GetBit(temp0, oscillation, 1)
+	if temp0 == false
+		DrawSprite(0)
+	end if
 end event
 
 
 event ObjectStartup
 	// Note - the majority of the speed booster sprite is built into the level tiles itself
 	// All that's drawn here is the overlay spinning frame, and even then, it's only drawn sometimes
-	LoadSpriteSheet("CPZ/Objects.gif")
-	SpriteFrame(-24, -8, 48, 16, 91, 25)
+
+	CheckCurrentStageFolder("Zone02")
+	if checkResult == true
+		LoadSpriteSheet("CPZ/Objects.gif")
+		SpriteFrame(-24, -8, 48, 16, 91, 25)
+	else
+		LoadSpriteSheet("MBZ/Objects.gif")
+		SpriteFrame(-24, -8, 48, 16, 474, 321)
+	end if
 
 	foreach (TypeName[Speed Booster], arrayPos0, ALL_ENTITIES)
 		if object[arrayPos0].propertyValue == 0
@@ -143,7 +153,6 @@ event ObjectStartup
 		else
 			object[arrayPos0].boostSpeed = 0x0A0000
 		end if
-		
 		object[arrayPos0].drawOrder = 5
 	next
 
@@ -169,23 +178,19 @@ event RSDKEdit
 		case EDIT_VAR_PROPVAL // property value
 			checkResult = object.propertyValue
 			break
-			
 		case 0 // boostSpeed
 			GetBit(checkResult, object.propertyValue, 0)
 			break
-			
 		end switch
 	else
 		switch editor.variableID
 		case EDIT_VAR_PROPVAL // property value
 			object.propertyValue = editor.variableValue
 			break
-			
 		case 0 // boostSpeed
 			CheckNotEqual(editor.variableValue, 0)
 			SetBit(object.propertyValue, 0, checkResult)
 			break
-			
 		end switch
 	end if
 end event
@@ -197,6 +202,8 @@ end event
 
 
 event RSDKLoad
+	CheckCurrentStageFolder("Zone02")
+	if checkResult == true
 		LoadSpriteSheet("CPZ/Objects.gif")
 		SpriteFrame(-24, -8, 48, 16, 91, 25)
 	else
