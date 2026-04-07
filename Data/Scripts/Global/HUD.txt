@@ -32,101 +32,48 @@ reserve function HUD_Draw_Mobile
 // ========================
 
 private function HUD_Draw_Standard
-	DrawSpriteScreenXY(40, 16, 207)
-	DrawSpriteScreenXY(55, 38, 211)
-	DrawNumbers(0, 56, 211, coinCount, 2, 8, 0)
-#platform: USE_ORIGINS
-	// temp4 will tell whether to draw lives or coins
-	temp4 = game.coinMode
-	
-	if game.playMode == BOOT_PLAYMODE_MISSION
-		if game.missionEnd == false
-			game.hudEnable = HUDENABLE_ON
+		//DrawSpriteScreenXY(40, 16, 207)
+		//DrawSpriteScreenXY(55, 38, 211)
+		//DrawNumbers(0, 56, 211, coinCount, 2, 8, 0)
+		// Draw the base SCORE/TIME/RINGS text
+		DrawSpriteScreenXY(10, 17, 13)
+		
+
+		if stage.minutes == 9
+			// Overlay the red TIME text
+			if object.flashingTimer > 7
+				DrawSpriteScreenXY(11, 17, 29)
+			end if
 		end if
-		temp4 = true
-	else
-		if game.playMode == BOOT_PLAYMODE_BOSSRUSH
-			game.hudEnable = HUDENABLE_ON
-			temp4 = false
+
+		// Overlay the red RINGS text if needed as well
+		if player[0].rings == 0
+			if object.flashingTimer > 7
+				DrawSpriteScreenXY(12, 17, 45)
+			end if
+		end if
+
+		DrawNumbers(0, 104, 16, player.score, 6, 8, 0)
+
+		if options.gameMode < MODE_TIMEATTACK
+			// Normal game - only minutes and seconds are shown
+			DrawSpriteScreenXY(14, 67, 29)
 		else
-			if game.coinMode != false
-				game.hudEnable = HUDENABLE_ON
-			end if
-#endplatform
+			// Time attack - draw milliseconds alongside of the other values
+			DrawSpriteScreenXY(13, 67, 29)
+			DrawNumbers(0, 104, 29, stage.milliSeconds, 2, 8, 1)
+		end if
 
-			// Draw the base SCORE/TIME/RINGS text
-			DrawSpriteScreenXY(10, 17, 13)
-			
-#platform: USE_ORIGINS
-			temp2 = stage.minutes
-			temp3 = stage.seconds
-			
-			CheckGreater(temp2, 9)
-			temp5 = checkResult
-			CheckNotEqual(object.timeOver, false)
-			checkResult |= temp5
-			
-			if checkResult != false
-				temp2 = 9
-				temp3 = 59
-			end if
-			
-			if temp2 == 9
-#endplatform
-#platform: USE_STANDALONE
-			if stage.minutes == 9
-#endplatform
-				// Overlay the red TIME text
-				if object.flashingTimer > 7
-					DrawSpriteScreenXY(11, 17, 29)
-				end if
-			end if
-
-			// Overlay the red RINGS text if needed as well
-#platform: USE_STANDALONE
-			if player[0].rings == 0
-#endplatform
-#platform: USE_ORIGINS
-			if player[currentPlayer].rings == 0
-#endplatform
-				if object.flashingTimer > 7
-					DrawSpriteScreenXY(12, 17, 45)
-				end if
-			end if
-
-			DrawNumbers(0, 104, 16, player.score, 6, 8, 0)
-
-			if options.gameMode < MODE_TIMEATTACK
-				// Normal game - only minutes and seconds are shown
-				DrawSpriteScreenXY(14, 67, 29)
-			else
-				// Time attack - draw milliseconds alongside of the other values
-				DrawSpriteScreenXY(13, 67, 29)
-				DrawNumbers(0, 104, 29, stage.milliSeconds, 2, 8, 1)
-			end if
-
-			// Rest of the time display
-#platform: USE_STANDALONE
+		// Rest of the time display
 		DrawNumbers(0, 115, 31, stage.seconds, 2, 8, 1)
 		DrawNumbers(0, 95, 31, stage.minutes, 1, 8, 1)
-		DrawNumbers(41, 30, 23, player[0].rings, 3, 8, 0)
-#endplatform
-#platform: USE_ORIGINS
-		DrawNumbers(0, 115, 31, stage.seconds, 2, 8, 1)
-		DrawNumbers(0, 84, 31, stage.minutes, 1, 8, 1)
-		DrawNumbers(41, 30, 23, player[currentPlayer].rings, 3, 8, 0)
-#endplatform
+		DrawNumbers(38, 30, 23, player[0].rings, 3, 8, 0)
 
 			if stage.debugMode == true
 				// Player position display, show it if they have debug mode on
 
 				// XPos display
-#platform: USE_STANDALONE
 				temp0 = object[0].xpos
-#endplatform
-#platform: USE_ORIGINS
-				temp0 = object[currentPlayer].xpos
-#endplatform
 				temp0 >>= 16
 				Abs(temp0)
 				temp1 = screen.xsize
@@ -134,12 +81,7 @@ private function HUD_Draw_Standard
 				DrawNumbers(0, temp1, 13, temp0, 5, 8, 1)
 
 				// YPos display
-#platform: USE_STANDALONE
 				temp0 = object[0].ypos
-#endplatform
-#platform: USE_ORIGINS
-				temp0 = object[currentPlayer].ypos
-#endplatform
 				temp0 >>= 16
 				Abs(temp0)
 				DrawNumbers(0, temp1, 29, temp0, 5, 8, 1)
@@ -150,23 +92,13 @@ private function HUD_Draw_Standard
 				// Draw the "X:" and "Y:" icons
 
 				// Use red variant if player is in a negative pos
-#platform: USE_STANDALONE
 				if object[0].xpos >= 0
-#endplatform
-#platform: USE_ORIGINS
-				if object[currentPlayer].xpos >= 0
-#endplatform
 					DrawSpriteScreenXY(18, temp1, 15)
 				else
 					DrawSpriteScreenXY(36, temp1, 15)
 				end if
-
-#platform: USE_STANDALONE
+				
 				if object[0].ypos >= 0
-#endplatform
-#platform: USE_ORIGINS
-				if object[currentPlayer].ypos >= 0
-#endplatform
 					DrawSpriteScreenXY(19, temp1, 31)
 				else
 					DrawSpriteScreenXY(37, temp1, 31)
@@ -404,26 +336,23 @@ event ObjectStartup
 	SpriteFrame(0, 0, 8, 8, 25, 98) 	// #36 - Red X Debug Icon
 	SpriteFrame(0, 0, 8, 8, 34, 98) 	// #37 - Red Y Debug Icon
 	
-#platform: USE_ORIGINS
-	SpriteFrame(0, 0, 16, 16, 179, 180)	// #38 - Coins life icon
-	SpriteFrame(0, 0, 39, 7, 179, 197)	// #39 - Coins name tag
-	SpriteFrame(0, 0, 16, 16, 185, 34) 	// #40 - Coins icon
-#endplatform
-	SpriteFrame(0, 0, 11, 12, 256, 32) 	// #41 - Small number 0
-	SpriteFrame(0, 0, 7, 12, 268, 32) 	// #42 - Small number 1
-	SpriteFrame(0, 0, 11, 12, 276, 32) 	// #43 - Small number 2
-	SpriteFrame(0, 0, 11, 12, 288, 32) 	// #44 - Small number 3
-	SpriteFrame(0, 0, 11, 12, 300, 32) 	// #45 - Small number 4
-	SpriteFrame(0, 0, 11, 12, 312, 32) 	// #46 - Small number 5
-	SpriteFrame(0, 0, 11, 12, 324, 32) 	// #47 - Small number 6
-	SpriteFrame(0, 0, 11, 12, 336, 32) 	// #48 - Small number 7
-	SpriteFrame(0, 0, 11, 12, 348, 32) 	// #49 - Small number 8
-	SpriteFrame(0, 0, 11, 12, 360, 32) 	// #50 - Small number 9
-	SpriteFrame(0, 0, 25, 20, 260, 151) 	// #51 - Sonic Head
-	SpriteFrame(0, 0, 21, 20, 291, 151) 	// #52 - Tails Head
-	SpriteFrame(0, 0, 23, 21, 320, 151) 	// #53 - Knux Head
-	SpriteFrame(0, 0, 36, 26, 262, 175) 	// #54 - Sonic & Tails Head
-	SpriteFrame(0, 0, 9, 9, 305, 180)	// #55 - Big "X"
+
+	SpriteFrame(0, 0, 11, 12, 256, 32) 	// #38 - Small number 0
+	SpriteFrame(0, 0, 7, 12, 268, 32) 	// #39 - Small number 1
+	SpriteFrame(0, 0, 11, 12, 276, 32) 	// #40 - Small number 2
+	SpriteFrame(0, 0, 11, 12, 288, 32) 	// #41 - Small number 3
+	SpriteFrame(0, 0, 11, 12, 300, 32) 	// #42 - Small number 4
+	SpriteFrame(0, 0, 11, 12, 312, 32) 	// #43 - Small number 5
+	SpriteFrame(0, 0, 11, 12, 324, 32) 	// #44 - Small number 6
+	SpriteFrame(0, 0, 11, 12, 336, 32) 	// #45 - Small number 7
+	SpriteFrame(0, 0, 11, 12, 348, 32) 	// #46 - Small number 8
+	SpriteFrame(0, 0, 11, 12, 360, 32) 	// #47 - Small number 9
+
+	SpriteFrame(0, 0, 25, 20, 260, 151) 	// #48 - Sonic Head
+	SpriteFrame(0, 0, 21, 20, 291, 151) 	// #49 - Tails Head
+	SpriteFrame(0, 0, 23, 21, 320, 151) 	// #50 - Knux Head
+	SpriteFrame(0, 0, 36, 26, 262, 175) 	// #51 - Sonic & Tails Head
+	SpriteFrame(0, 0, 9, 9, 305, 180)	// #52 - Big "X"
 	// Set the HUD's draw function based on the current platform
 	foreach (TypeName[HUD], arrayPos0, ALL_ENTITIES)
 		if engine.deviceType == STANDARD

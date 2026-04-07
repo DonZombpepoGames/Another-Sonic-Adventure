@@ -60,7 +60,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos -= 8
 					object[tempObjectPos].iypos -= 24
 					object[tempObjectPos].xvel = -0x10000
-					object[tempObjectPos].yvel = -0x20000
+					object[tempObjectPos].yvel = -0x30000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS1
 					object[tempObjectPos].drawOrder = 5
 
@@ -68,7 +68,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos += 8
 					object[tempObjectPos].iypos -= 24
 					object[tempObjectPos].xvel = 0x10000
-					object[tempObjectPos].yvel = -0x20000
+					object[tempObjectPos].yvel = -0x30000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS2
 					object[tempObjectPos].drawOrder = 5
 
@@ -76,7 +76,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos -= 8
 					object[tempObjectPos].iypos -= 8
 					object[tempObjectPos].xvel = -0x0F000
-					object[tempObjectPos].yvel = -0x1F000
+					object[tempObjectPos].yvel = -0x28000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS3
 					object[tempObjectPos].drawOrder = 5
 
@@ -84,7 +84,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos += 8
 					object[tempObjectPos].iypos -= 8
 					object[tempObjectPos].xvel = 0x0F000
-					object[tempObjectPos].yvel = -0x1F000
+					object[tempObjectPos].yvel = -0x28000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS4
 					object[tempObjectPos].drawOrder = 5
 
@@ -92,7 +92,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos -= 8
 					object[tempObjectPos].iypos += 8
 					object[tempObjectPos].xvel = -0x0E000
-					object[tempObjectPos].yvel = -0x1E000
+					object[tempObjectPos].yvel = -0x26000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS5
 					object[tempObjectPos].drawOrder = 5
 
@@ -100,7 +100,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos += 8
 					object[tempObjectPos].iypos += 8
 					object[tempObjectPos].xvel = 0x0E000
-					object[tempObjectPos].yvel = -0x1E000
+					object[tempObjectPos].yvel = -0x26000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS6
 					object[tempObjectPos].drawOrder = 5
 
@@ -108,7 +108,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos -= 8
 					object[tempObjectPos].iypos += 24
 					object[tempObjectPos].xvel = -0x0D000
-					object[tempObjectPos].yvel = -0x1D000
+					object[tempObjectPos].yvel = -0x24000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS7
 					object[tempObjectPos].drawOrder = 5
 
@@ -116,7 +116,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos += 8
 					object[tempObjectPos].iypos += 24
 					object[tempObjectPos].xvel = 0x0D000
-					object[tempObjectPos].yvel = -0x1D000
+					object[tempObjectPos].yvel = -0x24000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS8
 					object[tempObjectPos].drawOrder = 5
 
@@ -124,7 +124,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos -= 8
 					object[tempObjectPos].iypos += 32
 					object[tempObjectPos].xvel = -0x0C000
-					object[tempObjectPos].yvel = -0x1C000
+					object[tempObjectPos].yvel = -0x22000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS9
 					object[tempObjectPos].drawOrder = 5
 
@@ -132,7 +132,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos += 8
 					object[tempObjectPos].iypos += 32
 					object[tempObjectPos].xvel = 0x0C000
-					object[tempObjectPos].yvel = -0x1C000
+					object[tempObjectPos].yvel = -0x22000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS10
 					object[tempObjectPos].drawOrder = 5
 					
@@ -140,7 +140,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos -= 8
 					object[tempObjectPos].iypos += 48
 					object[tempObjectPos].xvel = -0x0B000
-					object[tempObjectPos].yvel = -0x1B000
+					object[tempObjectPos].yvel = -0x20000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS11
 					object[tempObjectPos].drawOrder = 5
 
@@ -148,7 +148,7 @@ event ObjectUpdate
 					object[tempObjectPos].ixpos += 8
 					object[tempObjectPos].iypos += 48
 					object[tempObjectPos].xvel = 0x0B000
-					object[tempObjectPos].yvel = -0x1B000
+					object[tempObjectPos].yvel = -0x20000
 					object[tempObjectPos].state = BREAKBLOCK_DEBRIS12
 					object[tempObjectPos].drawOrder = 5
 					object.type = TypeName[Blank Object]

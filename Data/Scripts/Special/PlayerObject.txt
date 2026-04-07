@@ -1038,17 +1038,17 @@ event ObjectStartup
 	player[2].state = Player_State_Ground
 	player[2].stateInput = Player_Input_Gamepad
 	switch stage.playerListPos
-	case PLAYER_SONIC_ALONE
+	case PLAYER_SONIC_A
 		player[2].xBoundsR = 88
 		player[2].frameOffset = 0
 		break
 		
-	case PLAYER_TAILS_ALONE
+	case PLAYER_TAILS_A
 		player[2].xBoundsR = 90
 		player[2].frameOffset = 16
 		break
 		
-	case PLAYER_KNUX_ALONE
+	case PLAYER_KNUCKLES_A
 		player[2].xBoundsR = 88
 		player[2].frameOffset = 32
 		break

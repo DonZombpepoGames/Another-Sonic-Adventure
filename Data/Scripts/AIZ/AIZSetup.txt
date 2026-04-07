@@ -17,8 +17,6 @@ private alias object.value14 : object.Vine3Index
 private alias object.value15 : object.Vine4Timer
 private alias object.value16 : object.Vine4Index
 
-
-
 // Tracks
 private alias 0 : TRACK_STAGE
 private alias 1 : TRACK_ACTFINISH
@@ -184,31 +182,27 @@ end table
 
 //foreground deformation
 public table AIZSetup_deformTableFG
-    -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, -1, -1
-    0, 0, 0, 0, -1, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1
-    0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    -1, 0,  0, -1, -1, 0, 0, 0, 0, -1, -1, 0, 0, 0, 0, -1
+	 0, 0,  0,  0, -1, 0, 0, 0, 0,  0,  0, 0, 0, 0, 0,  0
 end table
 
 //This is not here to use, but it looks fun
-//public table AIZSetup_deformTableFG
-//    0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 2, 2, 1, 1, 0,
-//   0, 1, 2, 3, 4, 5, 6, 6, 5, 3, 2, 2, 2, 1, 1, 0,
-//    0, 1, 2, 3, 4, 5, 6, 6, 5, 3, 2, 2, 2, 1, 1, 0,
-//    0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 2, 2, 1, 1, 0
-//end table
+// public table AIZSetup_deformTableFG
+// 	0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 2, 2, 1, 1, 0
+// 	0, 1, 2, 3, 4, 5, 6, 6, 5, 3, 2, 2, 2, 1, 1, 0
+// 	0, 1, 2, 3, 4, 5, 6, 6, 5, 3, 2, 2, 2, 1, 1, 0
+// 	0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 2, 2, 1, 1, 0
+// end table
 
 //background deformation
 public table AIZSetup_deformTableBG
-    -3, -1, -1, -1, -2, 0, -2, -2, -2, 0, -2, 0, -4, -2, 0, -4
-    -4, -1, 0, 0, -3, -4, -4, -1, -4, -4, -3, -4, -1, 0, 0, 0
-    -3, -1, -1, -1, -2, 0, -2, -2, -2, 0, -2, 0, -4, -2, 0, -4
-    -4, -1, 0, 0, -3, -4, -4, -1, -4, -4, -3, -4, -1, 0, 0, 0
+	-2, -2, -2, 0, -2, 0, -4, -2, 0, -4, -4, -1, 0, 0, -3, -4
+	-4, -1, -4, -4, -3, -4, -1, 0, 0, 0, -3, -1, -1, -1, -2, 0 
 end table
 
 public alias AIZSetup_value33 : AIZSetup_flashTimer
 
-function AIZSetup_Function95
+private function AIZSetup_Function95
 	stage[arrayPos1].deformationData1 = -1
 	arrayPos1++
 	stage[arrayPos1].deformationData1 = -1
@@ -236,7 +230,7 @@ function AIZSetup_Function95
 end function
 
 
-function AIZSetup_Function96
+private function AIZSetup_Function96
 	stage[arrayPos1].deformationData1 = 1
 	arrayPos1++
 	stage[arrayPos1].deformationData1 = 1
@@ -702,76 +696,67 @@ end if
 
 
 
-if Stage.actNum == 2
-	object.FGDeformationTimer++
-	if object.FGDeformationTimer >= 2
-		// FG Deformation
-		tileLayer[0].deformationOffset++
-		// FG Water Deformation
-		tileLayer[0].deformationOffsetW++
-		object.FGDeformationTimer = 0
+	if Stage.actNum == 2
+		object.FGDeformationTimer++
+		if object.FGDeformationTimer >= 2
+			// FG Deformation
+			tileLayer[0].deformationOffset++
+			// FG Water Deformation
+			tileLayer[0].deformationOffsetW++
+			object.FGDeformationTimer = 0
+		end if
+
+		object.BGDeformationTimer++
+		if object.BGDeformationTimer >= 4
+			// BG Deformation
+			tileLayer[1].deformationOffset++
+			// BG Water Deformation
+			tileLayer[1].deformationOffsetW++
+			object.BGDeformationTimer = 0
+		end if
 	end if
 
-	object.BGDeformationTimer++
-	if object.BGDeformationTimer >= 4
-		// BG Deformation
-		tileLayer[1].deformationOffset++
-		// BG Water Deformation
-		tileLayer[1].deformationOffsetW++
-		object.BGDeformationTimer = 0
+	if Stage.actNum == 2
+		object.PaletteTimer++
+		if object.PaletteTimer == 8
+			object.PaletteTimer = 0
+			RotatePalette(0, 188, 191, false)
+			RotatePalette(1, 188, 191, false)
+
+			// FG Palette Cyle
+			RotatePalette(2, 12, 15, false)
+			GetPaletteEntry(2, 12, temp0)
+			SetPaletteEntry(0, 164, temp0)
+
+			RotatePalette(2, 0, 9, false)
+			GetPaletteEntry(2, 0, temp0)
+			SetPaletteEntry(0, 168, temp0)
+
+			RotatePalette(2, 32, 33, false)
+			GetPaletteEntry(2, 32, temp0)
+			SetPaletteEntry(0, 187, temp0)
+
+			// BG Palette Cyle
+			RotatePalette(2, 16, 29, false)
+			GetPaletteEntry(2, 16, temp0)
+			SetPaletteEntry(0, 177, temp0)
+
+			RotatePalette(2, 3, 7, false)
+			GetPaletteEntry(2, 3, temp0)
+			SetPaletteEntry(0, 168, temp0)
+		end if
+	else
+		object.PaletteTimer++
+		if object.PaletteTimer == 7
+			object.PaletteTimer = 0
+			RotatePalette(0, 171, 174, false)
+			RotatePalette(1, 171, 174, false)
+		end if
 	end if
-end if
 
-if Stage.actNum == 1
-	object.PaletteTimer++
-	if object.PaletteTimer == 7
-		object.PaletteTimer = 0
-		RotatePalette(0, 171, 174, false)
-		RotatePalette(1, 171, 174, false)
+	if Water_flashTimer > 0
+		Water_flashTimer--
 	end if
-end if
-if Stage.actNum == 0
-	object.PaletteTimer++
-	if object.PaletteTimer == 7
-		object.PaletteTimer = 0
-		RotatePalette(0, 171, 174, false)
-		RotatePalette(1, 171, 174, false)
-	end if
-end if
-if Stage.actNum == 2
-	object.PaletteTimer++
-	if object.PaletteTimer == 8
-		object.PaletteTimer = 0
-		RotatePalette(0, 188, 191, false)
-		RotatePalette(1, 188, 191, false)
-
-		// FG Palette Cyle
-		RotatePalette(2, 12, 15, false)
-		GetPaletteEntry(2, 12, temp0)
-		SetPaletteEntry(0, 164, temp0)
-
-		RotatePalette(2, 0, 9, false)
-		GetPaletteEntry(2, 0, temp0)
-		SetPaletteEntry(0, 168, temp0)
-
-		RotatePalette(2, 32, 33, false)
-		GetPaletteEntry(2, 32, temp0)
-		SetPaletteEntry(0, 187, temp0)
-
-		// BG Palette Cyle
-		RotatePalette(2, 16, 29, false)
-		GetPaletteEntry(2, 16, temp0)
-		SetPaletteEntry(0, 177, temp0)
-
-		RotatePalette(2, 3, 7, false)
-		GetPaletteEntry(2, 3, temp0)
-		SetPaletteEntry(0, 168, temp0)
-	end	if
-end if
-
-if Water_flashTimer > 0
-	Water_flashTimer--
-end if
 	
 end event
 
@@ -792,6 +777,8 @@ event ObjectDraw
 	if Water_flashTimer > 0
 		SetActivePalette(2, temp0, screen.ysize)
 	else
+		//DrawRect(0, temp0, 512, 240, 0, 160, 224, 96)
+		
 		SetActivePalette(1, temp0, screen.ysize)
 	end if
 end event
@@ -821,17 +808,19 @@ event ObjectStartup
 	while arrayPos1 < 576
 		arrayPos2 = arrayPos1
 		arrayPos2 -= 256
-	//	stage[arrayPos1].deformationData1 = stage[arrayPos2].deformationData1
+		stage[arrayPos1].deformationData1 = stage[arrayPos2].deformationData1
 		stage[arrayPos1].deformationData3 = stage[arrayPos2].deformationData3
 		arrayPos1++
 	loop
-	SetLayerDeformation(1, 42, 1, 0, 0, 0)
-	SetLayerDeformation(3, 128, 4, 0, 0, 0)
+
+	//SetLayerDeformation(1, 42, 1, 0, 0, 0)
+	//SetLayerDeformation(3, 128, 4, 0, 0, 0)
+
 	if stage.actNum == 2
 		arrayPos0 = 0
 		while arrayPos0 < 576
 			temp0 = arrayPos0
-			temp0 &= 31
+			temp0 &= 0x1F
 				GetTableValue(stage[arrayPos0].deformationData0, temp0, AIZSetup_deformTableFG)
 				GetTableValue(stage[arrayPos0].deformationData2, temp0, AIZSetup_deformTableBG)
 			arrayPos0++

@@ -364,7 +364,7 @@ event ObjectStartup
 	next
 
 	// Turn all 1UP monitors into the icons of the appropriate character
-	if stage.playerListPos == PLAYER_TAILS_ALONE
+	if stage.playerListPos == PLAYER_TAILS_A
 		foreach (TypeName[Monitor], arrayPos0, ALL_ENTITIES)
 			if object[arrayPos0].propertyValue == MONITOR_1UP_SONIC
 				object[arrayPos0].propertyValue = MONITOR_1UP_TAILS
@@ -372,7 +372,7 @@ event ObjectStartup
 		next
 	end if
 	
-	if stage.playerListPos == PLAYER_KNUX_ALONE
+	if stage.playerListPos == PLAYER_KNUCKLES_A
 		foreach (TypeName[Monitor], arrayPos0, ALL_ENTITIES)
 			if object[arrayPos0].propertyValue == MONITOR_1UP_SONIC
 				object[arrayPos0].propertyValue = MONITOR_1UP_KNUX

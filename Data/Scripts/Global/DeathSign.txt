@@ -5,8 +5,40 @@
 // ----------------------------------
 
 event ObjectDraw
+	object.inkEffect = INK_ADD
+	temp0 = oscillation
+	temp0 <<= 2
+	Sin(temp1, temp0)
+	temp1 >>= 3
+	temp1 += 0x80
+	object.alpha = temp1
 	DrawSprite(0)
+	DrawSpriteFX(0, FX_INK, object.xpos, object.ypos)
+	DrawSpriteFX(1, FX_INK, object.xpos, object.ypos)
 end event
+
 event ObjectStartup
-	LoadSpriteSheet("Global/DeathSign.gif")
-	SpriteFrame(0, 0, 83, 83, 0, 0)
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-35, -35, 71, 71, 315, 148) 
+	SpriteFrame(-37, -37, 75, 75, 313, 219) 
+end event
+
+// ========================
+// Editor Events
+// ========================
+
+event RSDKDraw
+	DrawSprite(0)
+	object.inkEffect = INK_ALPHA
+
+	DrawSpriteFX(1, FX_INK, object.xpos, object.ypos)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-35, -35, 71, 71, 315, 148) 
+	SpriteFrame(-37, -37, 75, 75, 313, 219) 
+
+
+	SetVariableAlias(ALIAS_VAR_PROPVAL, "unused")
+end event

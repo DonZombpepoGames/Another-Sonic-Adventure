@@ -163,7 +163,7 @@ private function OOZSetup_PlayerState_OilPool
 					player.timer++
 				else
 					player.animation = ANI_WAITING
-					if stage.playerListPos == PLAYER_KNUX_ALONE
+					if stage.playerListPos == PLAYER_KNUCKLES_A
 						player.timer++
 						if player.timer == 834
 							player.timer = 0
@@ -364,7 +364,7 @@ private function OOZSetup_PlayerState_OilSlide
 					player.timer++
 				else
 					player.animation = ANI_WAITING
-					if stage.playerListPos == PLAYER_KNUX_ALONE
+					if stage.playerListPos == PLAYER_KNUCKLES_A
 						player.timer++
 						if player.timer == 834
 							player.timer = 0

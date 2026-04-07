@@ -789,7 +789,7 @@ event ObjectUpdate
 		
 		ProcessAnimation()
 
-		if player.character == PLAYER_TAILS_ALONE
+		if player.character == PLAYER_TAILS_A
 			CallFunction(TailsObject_ProcessTailSprite)
 		end if
 	end if
@@ -855,7 +855,7 @@ event ObjectDraw
 		player.animationSpeed 	= 0
 	end if
 
-	if player.character == PLAYER_TAILS_ALONE
+	if player.character == PLAYER_TAILS_A
 		if player.tailAnim != player.animation
 			if player.animation > ANI_LOOKINGDOWN
 				player.tailFrame = 0
@@ -1057,7 +1057,7 @@ event ObjectStartup
 		switch vs.player2Type
 		case 0
 			LoadAnimation("Sonic.ani")
-			player[1].character = PLAYER_SONIC_ALONE
+			player[1].character = PLAYER_SONIC_A
 			player[1].jumpOffset 	= -5
 			player[1].jumpAbility 	= Player_Action_DblJumpSonic
 			ANI_PEELOUT 			= ANI_RUNNING
@@ -1065,7 +1065,7 @@ event ObjectStartup
 			
 		case 1
 			LoadAnimation("Tails.ani")
-			player[1].character = PLAYER_TAILS_ALONE
+			player[1].character = PLAYER_TAILS_A
 			player[1].jumpOffset 	= -1
 			player[1].jumpAbility 	= Player_Action_DblJumpTails
 			stage.player2Enabled 	= false
@@ -1073,7 +1073,7 @@ event ObjectStartup
 			
 		case 2
 			LoadAnimation("Knuckles.ani")
-			player[1].character = PLAYER_KNUX_ALONE
+			player[1].character = PLAYER_KNUCKLES_A
 			player[1].jumpOffset 	= -5
 			player[1].jumpAbility 	= Player_Action_DblJumpKnux
 			ANI_PEELOUT 			= ANI_RUNNING
@@ -1087,7 +1087,7 @@ event ObjectStartup
 	end if
 
 	if stage.player2Enabled == true
-		ResetObjectEntity(1, TypeName[Player 2 Object], PLAYER_TAILS_ALONE, player[0].xpos, player[0].ypos)
+		ResetObjectEntity(1, TypeName[Player 2 Object], PLAYER_TAILS_A, player[0].xpos, player[0].ypos)
 		if starPostID == 0
 			// If at a level's start, then make Tails be 16 pixels left of Sonic
 			player[1].xpos -= 0x100000
@@ -1095,7 +1095,7 @@ event ObjectStartup
 
 		LoadAnimation("Tails.ani")
 		player[1].groupID 			= GROUP_PLAYERS
-		player[1].character 	= PLAYER_TAILS_ALONE // Small note - this is redundant to the ResetObjectEntity line as that already sets Tails's character, it doesn't matter too much though
+		player[1].character 	= PLAYER_TAILS_A // Small note - this is redundant to the ResetObjectEntity line as that already sets Tails's character, it doesn't matter too much though
 		player[1].state 			= Player_State_Air
 		player[1].priority 			= PRIORITY_ACTIVE
 #platform: USE_STANDALONE

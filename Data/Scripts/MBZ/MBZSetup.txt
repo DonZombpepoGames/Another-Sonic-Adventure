@@ -140,7 +140,7 @@ private function MBZSetup_State_OilPool
 					player.timer++
 				else
 					object.animation = ANI_WAITING
-					if stage.playerListPos == PLAYER_KNUX_ALONE
+					if stage.playerListPos == PLAYER_KNUCKLES_A
 						player.timer++
 						if player.timer == 834
 							player.timer = 0

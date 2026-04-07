@@ -74,9 +74,9 @@ public alias 3 : COL_RIGHT
 public alias 4 : COL_BOTTOM
 
 // Players List Pos Aliases
-public alias 0 : PLAYER_SONIC_ALONE
-public alias 1 : PLAYER_TAILS_ALONE
-public alias 2 : PLAYER_KNUX_ALONE
+public alias 0 : PLAYER_SONIC_A
+public alias 1 : PLAYER_TAILS_A
+public alias 2 : PLAYER_KNUCKLES_A
 public alias 3 : PLAYER_SONIC_AND_TAILS
 
 private alias object.value1 : object.palTimer
@@ -177,13 +177,13 @@ end event
 event ObjectStartup
 #platform: USE_ORIGINS
 	if stage.playerListPos > PLAYER_SONIC_AND_TAILS // If playing as Knuckles & Tails
-		stage.playerListPos = PLAYER_KNUX_ALONE
+		stage.playerListPos = PLAYER_KNUCKLES_A
 		stage.player2Enabled = true
 	end if
 	
 	// This same code still appears later in this event so this was likely a remnant of copy-pasting the K&T check from above
-	if stage.playerListPos > PLAYER_KNUX_ALONE // If playing as Sonic & Tails
-		stage.playerListPos = PLAYER_SONIC_ALONE
+	if stage.playerListPos > PLAYER_KNUCKLES_A // If playing as Sonic & Tails
+		stage.playerListPos = PLAYER_SONIC_A
 		stage.player2Enabled = true
 	end if
 #endplatform
@@ -206,8 +206,8 @@ event ObjectStartup
 	object[SLOT_SPECIALHUD].priority  	= PRIORITY_ACTIVE
 	object[SLOT_SPECIALHUD].drawOrder 	= 6
 	
-	if stage.playerListPos > PLAYER_KNUX_ALONE // If playing as Sonic & Tails
-		stage.playerListPos = PLAYER_SONIC_ALONE
+	if stage.playerListPos > PLAYER_KNUCKLES_A // If playing as Sonic & Tails
+		stage.playerListPos = PLAYER_SONIC_A
 		stage.player2Enabled = true
 	end if
 
@@ -276,7 +276,7 @@ event ObjectStartup
 	if stage.player2Enabled == true
 		SpecialSetup_ringCountTable = SpecialSetup_ringCount2P
 	else
-		if stage.playerListPos == PLAYER_KNUX_ALONE
+		if stage.playerListPos == PLAYER_KNUCKLES_A
 			SpecialSetup_ringCountTable = SpecialSetup_ringCountKnux
 		else
 			SpecialSetup_ringCountTable = SpecialSetup_ringCountSonic

@@ -488,22 +488,10 @@ event ObjectStartup
 	// (Dunno why a regular foreach isn't used here, but sure...)
 	arrayPos0 = 32
 	while arrayPos0 < 0x420
-		if object[arrayPos0].type == TypeName[Title Card]
+		if object[arrayPos0].type == TypeName[Title Card FHZ]
 			object[arrayPos0].priority 	= PRIORITY_ALWAYS
 			object[arrayPos0].alpha 	= 0xFF
 			object[arrayPos0].drawOrder = 6
-			stage.state = STAGE_PAUSED
-
-			if object[arrayPos0].propertyValue == TITLECARD_TYPE_ZONE_MBZ
-				CheckCurrentStageFolder("ZoneM")
-				if checkResult == false
-					// If the object has a property value of 5 & we're NOT in the Egg Gauntlet folder (somehow), then go back to the title screen
-					// (Purpose unknown, IDK why this exists)
-					stage.activeList = PRESENTATION_STAGE
-					stage.listPos = 0
-					LoadStage()
-				end if
-			end if
 		end if
 
 		arrayPos0++

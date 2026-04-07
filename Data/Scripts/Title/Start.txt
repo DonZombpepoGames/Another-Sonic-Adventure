@@ -28,7 +28,7 @@ private alias  9 : START_ORIGINSSTARTGAME
 private alias 10 : START_2PSENDCALLBACK
 
 // Player List Pos Aliases
-private alias 2 : PLAYER_KNUX_ALONE
+private alias 2 : PLAYER_KNUCKLES_A
 
 // Origins Menu Aliases
 // (The in-game menu on the title screen, to clarify)

@@ -116,7 +116,10 @@ event ObjectUpdate
 			object.state = TITLECARD_CREDITSFADEIN
 			object.timer = 272
 			stage.state = STAGE_RUNNING
-			SetScreenFade(0, 0, 0, 255)
+			if options.supressTitleCard == false
+				SetScreenFade(0, 0, 0, 255)
+			end if
+			
 		else
 			object.state++
 		end if
@@ -303,7 +306,6 @@ end event
 
 
 event ObjectDraw
-
 	temp2 = screen.xcenter
 	temp2 -= 160
 	temp2 >>= 1
@@ -314,12 +316,11 @@ event ObjectDraw
 	case TITLECARD_ENTERTITLECARD
 	case TITLECARD_SHOWTITLECARD
 		SetActivePalette(0, 0, screen.ysize)
-
 		// Blue BG Rect
 		DrawRect(0, 0, screen.xsize, object.blueRectPos, 0x20, 0x40, 0xC0, 0xFF)
-
-		DrawRect(0, object.blueRectPos, screen.xsize, screen.ysize, 0x00, 0x00, 0x00, 0xFF)
-
+		if options.supressTitleCard == false
+			DrawRect(0, object.blueRectPos, screen.xsize, screen.ysize, 0x00, 0x00, 0x00, 0xFF)
+		end if
 #platform: USE_STANDALONE
 		if options.vsMode == true
 			if object.state == TITLECARD_DELAY

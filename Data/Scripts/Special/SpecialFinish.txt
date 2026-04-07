@@ -266,12 +266,12 @@ event ObjectUpdate
 				else
 					if specialStage.emeralds == 127
 						switch stage.playerListPos
-						case PLAYER_SONIC_ALONE
-						case PLAYER_KNUX_ALONE
+						case PLAYER_SONIC_A
+						case PLAYER_KNUCKLES_A
 							object.state = SPECIALFINISH_WINSHOWREWARD
 							break
 							
-						case PLAYER_TAILS_ALONE
+						case PLAYER_TAILS_A
 							if options.superTails == true
 								object.state = SPECIALFINISH_WINSHOWREWARD
 							else
@@ -620,12 +620,12 @@ event ObjectStartup
 
 	//"[Player] Got A Chaos Emerald" Frames
 	switch stage.playerListPos
-	case PLAYER_SONIC_ALONE
+	case PLAYER_SONIC_A
 		SpriteFrame(-72, 32, 72, 16, 189, 277) 	// sonic text - #24
 		SpriteFrame(8, 32, 72, 16, 412, 277) 	// "got a" text - #25
 		break
 		
-	case PLAYER_TAILS_ALONE
+	case PLAYER_TAILS_A
 		if options.region == false
 			SpriteFrame(-69, 32, 69, 16, 262, 277) 	// tails text - #24
 		else
@@ -635,7 +635,7 @@ event ObjectStartup
 		SpriteFrame(8, 32, 72, 16, 412, 277) 		// "got a" text - #25
 		break
 		
-	case PLAYER_KNUX_ALONE
+	case PLAYER_KNUCKLES_A
 		SpriteFrame(-104, 32, 128, 16, 1, 294) 	// knuckles text - #24
 		SpriteFrame(32, 32, 72, 16, 412, 277) 	// "got a" text - #25
 		break
@@ -646,12 +646,12 @@ event ObjectStartup
 
 	//"[Player] Has All The Chaos Emeralds" Frames
 	switch stage.playerListPos
-	case PLAYER_SONIC_ALONE
+	case PLAYER_SONIC_A
 		SpriteFrame(-120, 32, 72, 16, 189, 277)	// sonic text - #37
 		SpriteFrame(-40, 32, 159, 16, 162, 311) // "has all the" text - #28
 		break
 		
-	case PLAYER_TAILS_ALONE
+	case PLAYER_TAILS_A
 		if options.region == false
 			SpriteFrame(-117, 32, 69, 16, 262, 277) 	// tails text - #27
 		else
@@ -661,7 +661,7 @@ event ObjectStartup
 		SpriteFrame(-40, 32, 159, 16, 162, 311)			// "has all the" text - #28
 		break
 		
-	case PLAYER_KNUX_ALONE
+	case PLAYER_KNUCKLES_A
 		SpriteFrame(-148, 32, 128, 16, 1, 294) 	// knuckles text - #27
 		SpriteFrame(-12, 32, 159, 16, 162, 311)	// "has all the" text - #28
 		break
@@ -672,13 +672,13 @@ event ObjectStartup
 
 	//"Now [Player] Can be Super/Hyper [Player]"
 	switch stage.playerListPos
-	case PLAYER_SONIC_ALONE
+	case PLAYER_SONIC_A
 		SpriteFrame(-96, 20, 55, 16, 355, 294) 	// "now" text - #30
 		SpriteFrame(-32, 20, 72, 16, 189, 277)	// sonic text - #31
 		SpriteFrame(48, 20, 48, 16, 411, 294) 	// "can" text - #32
 		break
 		
-	case PLAYER_TAILS_ALONE
+	case PLAYER_TAILS_A
 		SpriteFrame(-96, 20, 55, 16, 355, 294)		// "now" text - #30
 		
 		if options.region == false
@@ -690,7 +690,7 @@ event ObjectStartup
 		SpriteFrame(48, 20, 48, 16, 411, 294)		// "can" text - #32
 		break
 		
-	case PLAYER_KNUX_ALONE
+	case PLAYER_KNUCKLES_A
 		SpriteFrame(-124, 20, 55, 16, 355, 294)	// "now" text - #30
 		SpriteFrame(-60, 20, 128, 16, 1, 294)	// knuckles text - #31
 		SpriteFrame(76, 20, 48, 16, 411, 294)	// "can" text - #32
@@ -707,12 +707,12 @@ event ObjectStartup
 	end if
 
 	switch stage.playerListPos
-	case PLAYER_SONIC_ALONE
+	case PLAYER_SONIC_A
 		SpriteFrame(-80, 56, 80, 16, temp0, 311) 	// super/hyper text - #34
 		SpriteFrame(8, 56, 72, 16, 189, 277)		// sonic text - #35
 		break
 		
-	case PLAYER_TAILS_ALONE
+	case PLAYER_TAILS_A
 		SpriteFrame(-80, 56, 80, 16, temp0, 311)	// super/hyper text - #34
 		
 		if options.region == false
@@ -723,7 +723,7 @@ event ObjectStartup
 		
 		break
 		
-	case PLAYER_KNUX_ALONE
+	case PLAYER_KNUCKLES_A
 		SpriteFrame(-108, 56, 80, 16, temp0, 311)	// super/hyper text - #34
 		SpriteFrame(-20, 56, 128, 16, 1, 294)		// knuckles text - #35
 		break
@@ -732,12 +732,12 @@ event ObjectStartup
 
 	//"Now [Player] Can Go To Hidden Palace" frames
 	switch stage.playerListPos
-	case PLAYER_SONIC_ALONE
+	case PLAYER_SONIC_A
 		SpriteFrame(-72, 20, 55, 16, 355, 294) 	// "now" text - #36
 		SpriteFrame(0, 20, 72, 16, 189, 277) 	// sonic text - #37
 		break
 		
-	case PLAYER_TAILS_ALONE
+	case PLAYER_TAILS_A
 		SpriteFrame(-72, 20, 55, 16, 355, 294)		// "now" text - #36
 		
 		if options.region == false
@@ -747,7 +747,7 @@ event ObjectStartup
 		end if
 		break
 		
-	case PLAYER_KNUX_ALONE
+	case PLAYER_KNUCKLES_A
 		SpriteFrame(-100, 20, 55, 16, 355, 294)	// "now" text - #36
 		SpriteFrame(-28, 20, 128, 16, 1, 294)	// knuckles text - #37
 		break
